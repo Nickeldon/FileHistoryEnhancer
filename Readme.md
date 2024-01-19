@@ -1,6 +1,6 @@
 <div align='center'>
 
-<h1>Fixes file naming issue for Windows 11 FileHistory</h1>
+<h1>Windows FileHistory Enhancer</h1>
 <p>Fixes file naming issue when user tries to import Windows 10 FileHistory backup into a Windows 11 File System</p>
 
 <h4> <span> · </span> <a href="https://github.com/Nickeldon/FileHistoryEnhancer/blob/master/README.md"> Documentation </a> <span> · </span> <a href="https://github.com/Nickeldon/FileHistoryEnhancer/issues"> Report Bug </a> <span> · </span> <a href="https://github.com/Nickeldon/FileHistoryEnhancer/issues"> Request Feature </a> </h4>
@@ -20,25 +20,19 @@
 ## :star2: About the Project
 
 ### :camera: Screenshots
-<div align="center"> <a href=""><img src="https://imgur.com/a/cCUpdio" alt='image' width='800'/></a> </div>
-<div align="center"> <a href=""><img src="https://imgur.com/a/a8Iuy2l" alt='image' width='800'/></a> </div>
+<h2>Before</h2>
+<div align="center"> <a href=""><img src="https://imgur.com/a/cCUpdio" alt='image' width='800'/></a> </div></br>
+<h2>After</h2>
+<div align="center"> <a href=""><img src="https://imgur.com/a/a8Iuy2l" alt='image' width='800'/></a> </div></br>
 
 
 
 ### :dart: Features
 - File name Format Enhancer
 
-
-### :art: Color Reference
-| Color | Hex |
-| --------------- | ---------------------------------------------------------------- |
-| Primary Color | ![#132f59](https://via.placeholder.com/10/132f59?text=+) #132f59 |
-| Secondary Color | ![#393E46](https://via.placeholder.com/10/393E46?text=+) #393E46 |
-| Accent Color | ![#00ADB5](https://via.placeholder.com/10/00ADB5?text=+) #00ADB5 |
-| Text Color | ![#EEEEEE](https://via.placeholder.com/10/EEEEEE?text=+) #EEEEEE |
-
 ### :key: Environment Variables
 To run this project, you will need to add the following environment variables to your .env file
+
 `NodeJS`
 
 `NPM`
@@ -82,11 +76,19 @@ cd FileHistoryEnhancer
 ```
 Install dependencies
 ```bash
-yarn install or npm install
+npm install
+```
+or
+```bash
+yarn install
 ```
 start the program
 ```bash
-node . or npm start
+node .
+```
+or
+```bash
+npm start
 ```
 
 
