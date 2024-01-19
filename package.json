@@ -1,0 +1,19 @@
+{
+  "name": "filehistory_renamer",
+  "version": "1.0.0",
+  "description": "Fixes broken Windows FileHistory naming system for backed up files (May be problematic if a Windows 10 FileHistory merges with Windows 11 File System) ",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nickeldon/FileHistoryEnhancer.git"
+  },
+  "author": "Nickeldon",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Nickeldon/FileHistoryEnhancer/issues"
+  },
+  "homepage": "https://github.com/Nickeldon/FileHistoryEnhancer#readme"
+}
