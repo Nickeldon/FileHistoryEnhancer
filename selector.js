@@ -4,7 +4,7 @@ const fs = require('fs')
 var dirs = []
 var choices
 var initialchoices
-var response
+var response;
 
 function dirsarray(dir){
     choices = []

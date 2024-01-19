@@ -102,7 +102,8 @@ function ReadFile(dir) {
 
                 //You already should have an idea of what is happening there
                 if(value !== elementarray[countedmodifer] + fileTypes[countedmodifer]){
-                fs.renameSync(dir + '\\' + value, dir + '\\' + elementarray[countedmodifer] + fileTypes[countedmodifer])}
+                fs.renameSync(dir + '\\' + value, dir + '\\' + elementarray[countedmodifer] + (fileTypes[countedmodifer].split(".")[1] !== 'undefined' && fileTypes ? fileTypes[countedmodifer] : ""))
+            }
         }
         catch(e){
             console.error("There is nothing we can do... I messed up", e)
@@ -126,6 +127,8 @@ initialdir().then((value) => {
             })   
             if(!multidirbool){ ReadFile(dir); console.log("done")}
             else{
+                console.log(fs.readdirSync(dir, {recursive: true}))
+                process.exit(1)
                 exceptdir(dir).then(arraydirs => {
                     if(arraydirs !== false && arraydirs){
                     arraydirs.forEach(val => {
