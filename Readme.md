@@ -20,9 +20,9 @@
 ## :star2: About the Project
 
 ### :camera: Screenshots
-<h2>Before</h2>
+<p>Before</p>
 <div align="center"> <a href=""><img src="https://imgur.com/a/cCUpdio" alt='image' width='800'/></a> </div></br>
-<h2>After</h2>
+<p>After</p>
 <div align="center"> <a href=""><img src="https://imgur.com/a/a8Iuy2l" alt='image' width='800'/></a> </div></br>
 
 
@@ -113,6 +113,6 @@ Distributed under the no License. See LICENSE.txt for more information.
 
 ## :handshake: Contact
 
-Nickeldon - -
+Nickeldon - Fred_Redstone_2
 
 Project Link: [https://github.com/Nickeldon/FileHistoryEnhancer](https://github.com/Nickeldon/FileHistoryEnhancer)
