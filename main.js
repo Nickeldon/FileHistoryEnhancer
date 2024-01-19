@@ -17,10 +17,10 @@ function ReadFile(dir) {
     filenames.forEach(element => {
 
         if(!fs.statSync(element).isDirectory()){
-        validelem.push(element)
+            validelem.push(element)
         //Verify if element actually has to be modified
         if(element.split(regex)[1] === undefined){
-           var nullType = element.split(".")[1]
+           var nullType = element.split(/\./)[1]
         }
         else {
             element = element.split(regex)
@@ -30,8 +30,8 @@ function ReadFile(dir) {
         console.log(element[1])
         
         //Verifies if element has valid file extension
-        if(element[1].split(".")[1] !== undefined){
-            var elementType = element[1].split(".")[1]
+        if(element[1] !== undefined){
+            var elementType = element[1]
         }
             //Useless
         else if(nullType !== undefined){
@@ -48,7 +48,8 @@ function ReadFile(dir) {
             a String which only returned the first character of the file name 
             instead of the full proper file name*/
         if(typeof element === 'object'){
-        element = element[0]}
+            element = element[0]
+        }
         else{
             //If element is String, just return it :skull:...
             element = element
@@ -63,6 +64,7 @@ function ReadFile(dir) {
     });  
 
     console.log(filenames)
+    console.log(elementarray)
     //console.log(fileTypes.length, filenames.length)
     /*alttypes = []
     for(k = 0; k< fileTypes.length; k++){
@@ -76,17 +78,14 @@ function ReadFile(dir) {
     //console.log(validelem.length, fileTypes.length, elementarray.length)
     
     //Verifies how many times a certain file name was repeated over the directory (First element is unchanged)
-    for(i = 0; i < validelem.length; i++){
+    for(i = 0; i < elementarray.length; i++){
         var count = 0
         //console.log(elementarray[i])
 
         //Verifies every element before filenames[i]
-        for(k = i - 1; k > 0; k--){
-            var var1 = validelem[k]
-            var var2 = validelem[i]
-            if (var1 === "CV_V2"){
-                console.log("Success!")
-            }
+        for(k = i - 1; k >= 0; k--){
+            var var1 = elementarray[i]
+            var var2 = elementarray[k]
             if(var1 == var2){
                 count++
                 if(count === 1){
