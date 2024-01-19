@@ -4,12 +4,13 @@ const selector = require('./selector')
 const exceptdir = selector.direxception
 const initialdir = selector.initial
 var multidirbool = false;
+var filenames
 
 var regex = /\s\(\d{4}_\d{2}_\d{2}\s\d{2}_\d{2}_\d{2}\sUTC\)/
 
-function ReadFile(dir) {
+function ReadFile(dir, rchoice) {
     try{
-    var filenames = fs.readdirSync(dir)
+        filenames = fs.readdirSync(dir, {recursive: rchoice})
     }catch(e){
         console.error("There is nothing we can do... I messed up",e)
     }
@@ -96,7 +97,7 @@ function ReadFile(dir) {
     var countedmodifer = 0
     //Passes through the directory once again to modify the file names
     validelem.forEach(value => {
-        if(!fs.statSync(value).isDirectory()){
+        if(!fs.statSync(dir + '\\' + value).isDirectory()){
         try{
             fs.statSync(dir + '\\' + value)
 
@@ -127,23 +128,30 @@ initialdir().then((value) => {
             })   
             if(!multidirbool){ ReadFile(dir); console.log("done")}
             else{
-                console.log(fs.readdirSync(dir, {recursive: true}))
-                process.exit(1)
-                exceptdir(dir).then(arraydirs => {
-                    if(arraydirs !== false && arraydirs){
+                exceptdir(dir).then(response => {
+                    var {arraydirs, recchoice, processdir} = []
+                    arraydirs = response.dirselect
+                    recchoice = response.rchoice
+                    if(arraydirs !== false && arraydirs && !recchoice){
                     arraydirs.forEach(val => {
                         console.log(`${dir}\\${val}`)
                         try{
-                            ReadFile(`${dir}\\${val}`)
+                            ReadFile(`${dir}\\${val}`, false)
                         }catch(e){
                             console.error("There is nothing we can do... I messed up", e)
                         }
-                    })}
+                    })
                     try{
-                        ReadFile(dir)
+                        ReadFile(dir, false)
                     }catch(e){
                         console.error("There is nothing we can do... I messed up", e)
                     }
+                } else if(recchoice){
+                    arraydirs.forEach(val => {
+                        ReadFile(dir + '\\' + val, true)
+                    })
+                }
+                    
                     console.log("done")
                 })
             }

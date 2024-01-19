@@ -70,10 +70,19 @@ module.exports = {
                         name: 'dirselect',
                         message: '\n\nChoose which of the folowing folders you which to transform',
                         choices: (choices)
+                    },
+                    {
+                        type: 'select',
+                        name: 'rchoice',
+                        message: '\n\nDo you want the program to scan every chosen subfolders and\n their contents?',
+                        choices: [
+                            {title: 'yes', value: true},
+                            {title: 'no', value: false}
+                        ]
                     }
                 ])
                 //console.log(response)
-                return response.dirselect
+                return response
             }else{
                 return response.dirconfirmation
             }
