@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/Nickeldon/FileHistoryEnhancer/issues"
   },
-  "homepage": "https://github.com/Nickeldon/FileHistoryEnhancer#readme"
+  "homepage": "https://github.com/Nickeldon/FileHistoryEnhancer#readme",
+  "dependencies": {
+    "prompts": "^2.4.2",
+    "yargs": "^17.7.2"
+  }
 }

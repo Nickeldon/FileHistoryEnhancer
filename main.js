@@ -1,6 +1,9 @@
 const fs = require('fs')
 const path = require('path')
-const dir = __dirname
+const selector = require('./selector')
+const exceptdir = selector.direxception
+const initialdir = selector.initial
+
 
 var regex = /\s\(\d{4}_\d{2}_\d{2}\s\d{2}_\d{2}_\d{2}\sUTC\)/
 
@@ -13,14 +16,14 @@ function ReadFile(dir) {
        var elementarray = []
        var fileTypes = []
        var validelem = []
-       
     filenames.forEach(element => {
-
-        if(!fs.statSync(element).isDirectory()){
+        
+        if(!fs.statSync(dir + '\\' + element).isDirectory()){
             validelem.push(element)
         //Verify if element actually has to be modified
         if(element.split(regex)[1] === undefined){
-           var nullType = element.split(/\./)[1]
+           element = element.split(/\./)
+           element[1] = `.${element[1]}`
         }
         else {
             element = element.split(regex)
@@ -33,27 +36,19 @@ function ReadFile(dir) {
         */
         
         //Verifies if element has valid file extension
-        if(element[1] !== undefined){
+        if(element !== undefined){
             var elementType = element[1]
-        }
-            //Useless
-        else if(nullType !== undefined){
-            var elementType = nullType
-        }
-        //Useless
-        else{
-            console.log(nullType)
         }
         
         /*FIXES a bug where element was considered
             a String which only returned the first character of the file name 
             instead of the full proper file name*/
         if(typeof element === 'object'){
+            //console.log(element)
             element = element[0]
         }
         else{
-            //If element is String, just return it :skull:...
-            element = element
+            //console.log('EXCEPTION: ',element)
         }
         
         //Adds transformed element to previously created array (ln.11)
@@ -63,38 +58,43 @@ function ReadFile(dir) {
         if(elementType !== undefined){
         fileTypes.push(elementType)}}
     });  
-
     /*
     DEBUG
     console.log(filenames)
     console.log(elementarray)
     */
     
-    
     //Verifies how many times a certain file name was repeated over the directory (First element is unchanged)
     for(i = elementarray.length - 1; i >= 0; i--){
         var count = 0
+        /*
+        DEBUG
         //console.log(elementarray[i])
-
+        //console.log(elementarray[i], fileTypes[i])
+        */
         //Verifies every element before filenames[i]
         for(k = i + 1; k < elementarray.length; k++){
-            var var1 = elementarray[i]
-            var var2 = elementarray[k]
-            if(var1 == var2){
+            var var1 = elementarray[i].split(" (")[0]
+            var var2 = elementarray[k].split(" (")[0]
+            var ext1 = fileTypes[i]
+            var ext2 = fileTypes[k]
+            if(var1 === var2 && ext1 === ext2){
                 count++
             }
         }
         //"If element was just introduced, keep it unchainged"
-        //console.log(elementarray[i])
         if(count > 0){
             elementarray[i] += ` (${count})`
         }
     
     }
-    //Yes
+    /*
+    DEBUG
     console.log(elementarray)
+    */
+    console.log(elementarray)
+    process.exit(1)
     var countedmodifer = 0
-
     //Passes through the directory once again to modify the file names
     validelem.forEach(value => {
         if(!fs.statSync(value).isDirectory()){
@@ -112,4 +112,18 @@ function ReadFile(dir) {
     })
 }
 
-ReadFile(dir)
+initialdir().then((value) => {
+    dir = value;
+    if(dir){
+        if(!fs.existsSync(dir)){
+            console.warn("Provided dir does not exist or is not accessible.\nOperation aborted")
+            process.exit(1)
+        }
+        else{   
+            ReadFile(dir)
+        }
+    }else{
+        console.warn("Provided dir does not exist or is not accessible.\nOperation aborted")
+        process.exit(1)
+    }
+})
