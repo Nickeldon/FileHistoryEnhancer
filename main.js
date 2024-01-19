@@ -26,8 +26,11 @@ function ReadFile(dir) {
             element = element.split(regex)
         }
         
+        /*
+        DEBUG
         console.log(element)
         console.log(element[1])
+        */
         
         //Verifies if element has valid file extension
         if(element[1] !== undefined){
@@ -41,8 +44,6 @@ function ReadFile(dir) {
         else{
             console.log(nullType)
         }
-        //console.log(elementType)
-        //elementType = elementType.split(".")
         
         /*FIXES a bug where element was considered
             a String which only returned the first character of the file name 
@@ -63,36 +64,25 @@ function ReadFile(dir) {
         fileTypes.push(elementType)}}
     });  
 
+    /*
+    DEBUG
     console.log(filenames)
     console.log(elementarray)
-    //console.log(fileTypes.length, filenames.length)
-    /*alttypes = []
-    for(k = 0; k< fileTypes.length; k++){
-        for(i = 0; i < alttypes.length; i++){
-            if(fileTypes[k] !== alttypes[i]){
-                alttypes 
-            }
-        }
-    }*/
-    //console.log(fileTypes)
-    //console.log(validelem.length, fileTypes.length, elementarray.length)
+    */
+    
     
     //Verifies how many times a certain file name was repeated over the directory (First element is unchanged)
-    for(i = 0; i < elementarray.length; i++){
+    for(i = elementarray.length - 1; i >= 0; i--){
         var count = 0
         //console.log(elementarray[i])
 
         //Verifies every element before filenames[i]
-        for(k = i - 1; k >= 0; k--){
+        for(k = i + 1; k < elementarray.length; k++){
             var var1 = elementarray[i]
             var var2 = elementarray[k]
             if(var1 == var2){
                 count++
-                if(count === 1){
-                    //console.log('THIS: ', filenames[k].split(" ")[0], 'AND THIS: ', filenames[i].split(" ")[0])
-                }
             }
-            //console.log(filenames[i].split(" ")[0])
         }
         //"If element was just introduced, keep it unchainged"
         //console.log(elementarray[i])
@@ -104,7 +94,6 @@ function ReadFile(dir) {
     //Yes
     console.log(elementarray)
     var countedmodifer = 0
-    process.exit(10)
 
     //Passes through the directory once again to modify the file names
     validelem.forEach(value => {
@@ -114,7 +103,7 @@ function ReadFile(dir) {
                 fs.statSync(dir + '\\' + value)
 
                 //You already should have an idea of what is happening there
-                fs.renameSync(dir + '\\' + value, dir + '\\' + elementarray[countedmodifer] + '.' + fileTypes[countedmodifer])
+                fs.renameSync(dir + '\\' + value, dir + '\\' + elementarray[countedmodifer] + fileTypes[countedmodifer])
         }}
         catch(e){
             console.error("There is nothing we can do... I messed up",value)
