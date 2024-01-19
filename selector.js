@@ -22,8 +22,9 @@ fs.readdirSync(dir).forEach((value) => {
 })}
 dirsarray(__dirname)
 initialchoices.push(
-    {"title": "Current dir", "value": __dirname},
-    {"tilte": "Separate dir", "value": "other"})
+    {"title": "Current folder", "value": __dirname},
+    {"title": "Other folder", "value": "other"}
+)
 
 module.exports = {
     initial: async function initial(){
