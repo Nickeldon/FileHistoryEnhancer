@@ -1,11 +1,14 @@
 const fs = require('fs')
 const path = require('path')
 const dir = __dirname
+
+var regex = /\s\(\d{4}_\d{2}_\d{2}\s\d{2}_\d{2}_\d{2}\sUTC\)/
+
 function ReadFile(dir) {
     try{
     var filenames = fs.readdirSync(dir)
     }catch(e){
-        console.error("There is nothing we can do... I messed up")
+        console.error("There is nothing we can do... I messed up",e)
     }
        var elementarray = []
        var fileTypes = []
@@ -16,15 +19,20 @@ function ReadFile(dir) {
         if(!fs.statSync(element).isDirectory()){
         validelem.push(element)
         //Verify if element actually has to be modified
-        if(element.split("(")[1] === undefined){
+        if(element.split(regex)[1] === undefined){
            var nullType = element.split(".")[1]
-        }else {element = element.split("(")}
-        //console.log(element)
-        //console.log(element[1])
+        }
+        else {
+            element = element.split(regex)
+        }
+        
+        console.log(element)
+        console.log(element[1])
         
         //Verifies if element has valid file extension
         if(element[1].split(".")[1] !== undefined){
-            var elementType = element[1].split(".")[1]}
+            var elementType = element[1].split(".")[1]
+        }
             //Useless
         else if(nullType !== undefined){
             var elementType = nullType
@@ -54,7 +62,7 @@ function ReadFile(dir) {
         fileTypes.push(elementType)}}
     });  
 
-    console.log(elementarray)
+    console.log(filenames)
     //console.log(fileTypes.length, filenames.length)
     /*alttypes = []
     for(k = 0; k< fileTypes.length; k++){
@@ -65,7 +73,8 @@ function ReadFile(dir) {
         }
     }*/
     //console.log(fileTypes)
-    console.log(validelem.length, fileTypes.length, elementarray.length)
+    //console.log(validelem.length, fileTypes.length, elementarray.length)
+    
     //Verifies how many times a certain file name was repeated over the directory (First element is unchanged)
     for(i = 0; i < validelem.length; i++){
         var count = 0
@@ -73,7 +82,12 @@ function ReadFile(dir) {
 
         //Verifies every element before filenames[i]
         for(k = i - 1; k > 0; k--){
-            if(validelem[k].split(" ")[0] === validelem[i].split(" ")[0] && validelem[k].split(".")[1] === validelem[i].split(".")[1]){
+            var var1 = validelem[k]
+            var var2 = validelem[i]
+            if (var1 === "CV_V2"){
+                console.log("Success!")
+            }
+            if(var1 == var2){
                 count++
                 if(count === 1){
                     //console.log('THIS: ', filenames[k].split(" ")[0], 'AND THIS: ', filenames[i].split(" ")[0])
@@ -84,14 +98,14 @@ function ReadFile(dir) {
         //"If element was just introduced, keep it unchainged"
         //console.log(elementarray[i])
         if(count > 0){
-        elementarray[i] = elementarray[i].split(" ")[0] + `(${count})`}
-        else{
-            elementarray[i] = elementarray[i].split(" ")[0]
+            elementarray[i] += ` (${count})`
         }
+    
     }
     //Yes
     console.log(elementarray)
     var countedmodifer = 0
+    process.exit(10)
 
     //Passes through the directory once again to modify the file names
     validelem.forEach(value => {
@@ -104,7 +118,7 @@ function ReadFile(dir) {
                 fs.renameSync(dir + '\\' + value, dir + '\\' + elementarray[countedmodifer] + '.' + fileTypes[countedmodifer])
         }}
         catch(e){
-            console.error("There is nothing we can do... I messed up")
+            console.error("There is nothing we can do... I messed up",value)
         }
         countedmodifer++}
     })
