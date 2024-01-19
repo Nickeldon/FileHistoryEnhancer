@@ -3,7 +3,7 @@ const path = require('path')
 const selector = require('./selector')
 const exceptdir = selector.direxception
 const initialdir = selector.initial
-
+var multidirbool = false
 
 var regex = /\s\(\d{4}_\d{2}_\d{2}\s\d{2}_\d{2}_\d{2}\sUTC\)/
 
@@ -18,7 +18,7 @@ function ReadFile(dir) {
        var validelem = []
     filenames.forEach(element => {
         
-        if(!fs.statSync(dir + '\\' + element).isDirectory()){
+        if(!fs.statSync(`${dir}\\${element}`).isDirectory()){
             validelem.push(element)
         //Verify if element actually has to be modified
         if(element.split(regex)[1] === undefined){
@@ -92,21 +92,20 @@ function ReadFile(dir) {
     DEBUG
     console.log(elementarray)
     */
-    console.log(elementarray)
-    process.exit(1)
+    //console.log(elementarray)
     var countedmodifer = 0
     //Passes through the directory once again to modify the file names
     validelem.forEach(value => {
         if(!fs.statSync(value).isDirectory()){
         try{
-            if(value !== elementarray[countedmodifer]){
-                fs.statSync(dir + '\\' + value)
+            fs.statSync(dir + '\\' + value)
 
                 //You already should have an idea of what is happening there
-                fs.renameSync(dir + '\\' + value, dir + '\\' + elementarray[countedmodifer] + fileTypes[countedmodifer])
-        }}
+                if(value !== elementarray[countedmodifer] + fileTypes[countedmodifer]){
+                fs.renameSync(dir + '\\' + value, dir + '\\' + elementarray[countedmodifer] + fileTypes[countedmodifer])}
+        }
         catch(e){
-            console.error("There is nothing we can do... I messed up",value)
+            console.error("There is nothing we can do... I messed up", e)
         }
         countedmodifer++}
     })
@@ -119,8 +118,33 @@ initialdir().then((value) => {
             console.warn("Provided dir does not exist or is not accessible.\nOperation aborted")
             process.exit(1)
         }
-        else{   
-            ReadFile(dir)
+        else{
+            fs.readdirSync(dir).forEach(temp => {
+                if(fs.statSync(`${dir}\\${temp}`).isDirectory()){
+                    multidirbool = true
+                }
+            })   
+            if(!multidirbool){ ReadFile(dir); console.log("done")}
+            else{
+                exceptdir(dir).then(arraydirs => {
+                    if(arraydirs !== false && arraydirs){
+                    arraydirs.forEach(val => {
+                        console.log(`${dir}\\${val}`)
+                        try{
+                            ReadFile(`${dir}\\${val}`)
+                        }catch(e){
+                            console.error("There is nothing we can do... I messed up", e)
+                        }
+                    })}
+                    try{
+                        ReadFile(dir)
+                    }catch(e){
+                        console.error("There is nothing we can do... I messed up", e)
+                    }
+                    console.log("done")
+                })
+            }
+            
         }
     }else{
         console.warn("Provided dir does not exist or is not accessible.\nOperation aborted")

@@ -2,13 +2,15 @@ const prompts = require('prompts');
 prompts.override(require('yargs').argv);
 const fs = require('fs')
 var dirs = []
-var choices = []
-var initialchoices = []
+var choices
+var initialchoices
 var response
-var choosendir = __dirname
 
-fs.readdirSync(choosendir).forEach((value) => {
-    if(fs.statSync(value).isDirectory()){
+function dirsarray(dir){
+    choices = []
+    initialchoices = []
+fs.readdirSync(dir).forEach((value) => {
+    if(fs.statSync(dir + '\\' + value).isDirectory()){
         dirs.push(value)
         var json = {
             "title": value,
@@ -17,7 +19,8 @@ fs.readdirSync(choosendir).forEach((value) => {
         choices.push((json))
         initialchoices.push(json)
     }
-})
+})}
+dirsarray(__dirname)
 initialchoices.push(
     {"title": "Current dir", "value": __dirname},
     {"tilte": "Separate dir", "value": "other"})
@@ -28,7 +31,7 @@ module.exports = {
                 {
                     type: 'select',
                     name: 'targetdir',
-                    message: 'choose which folder do you want to transform',
+                    message: '\n\nchoose which folder do you want to transform',
                     choices: initialchoices
                 }
             ])
@@ -37,7 +40,7 @@ module.exports = {
                     {
                         type: 'text',
                         name: 'targetdir',
-                        message: 'Please type the exact path of the dir you want to transform'
+                        message: '\n\nPlease type the exact path of the dir you want to transform'
                     }
                 ])
             }
@@ -47,13 +50,13 @@ module.exports = {
         
     },
 
-    direxception: function direxception(){
-        (async() => {
+    direxception: async function direxception(EXCEPTIONdir){
+        dirsarray(EXCEPTIONdir)
             response = await prompts([
                 {
                     type: 'select',
                     name: 'dirconfirmation',
-                    message: 'There seems to be multiple sub folders inside the targetted folder.\n Enable chain transformation?',
+                    message: '\n\nThere seems to be multiple sub folders inside the targetted folder.\n Enable chain transformation?',
                     choices: [
                         {title: 'yes', value: true},
                         {title: 'no', value: false}
@@ -65,15 +68,14 @@ module.exports = {
                     {
                         type: 'multiselect',
                         name: 'dirselect',
-                        message: 'Choose which of the folowing folders you which to transform',
+                        message: '\n\nChoose which of the folowing folders you which to transform',
                         choices: (choices)
                     }
                 ])
-                console.log(response)
+                //console.log(response)
                 return response.dirselect
             }else{
                 return response.dirconfirmation
             }
-        })()
     }
 }
