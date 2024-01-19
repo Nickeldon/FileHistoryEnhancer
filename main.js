@@ -3,7 +3,7 @@ const path = require('path')
 const selector = require('./selector')
 const exceptdir = selector.direxception
 const initialdir = selector.initial
-var multidirbool = false
+var multidirbool = false;
 
 var regex = /\s\(\d{4}_\d{2}_\d{2}\s\d{2}_\d{2}_\d{2}\sUTC\)/
 
