@@ -83,13 +83,13 @@ or
 yarn install
 ```
 start the program
-```bash
+`bash
 node .
-```
+`
 or
-```bash
+`bash
 npm start
-```
+`
 
 
 ## :compass: Roadmap
@@ -99,17 +99,9 @@ npm start
 * [x] Add directory chain support and user action
 
 
-## :wave: Contributing
-
-<a href="https://github.com/Nickeldon/FileHistoryEnhancer/graphs/contributors"> <img src="https://contrib.rocks/image?repo=Louis3797/awesome-readme-template" /> </a>
-
-Contributions are always welcome!
-
-see `contributing.md` for ways to get started
-
 ## :warning: License
 
-Distributed under the no License. See LICENSE.txt for more information.
+Distributed under the GPL 3 License. See LICENSE.txt for more information.
 
 ## :handshake: Contact
 
