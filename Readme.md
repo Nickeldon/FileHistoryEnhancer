@@ -103,6 +103,7 @@ npm start
 * [x] Class the modified files by their file extension
 * [x] Add a user interface where the user can choose the targetted folder to transform
 * [x] Add directory chain support and user action
+* [x] Add recursion support for indefinite subfolder chains
 
 
 ## :warning: License
