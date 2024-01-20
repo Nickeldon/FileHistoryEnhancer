@@ -66,16 +66,19 @@ npm install --global yarn
 ### :running: Run Locally
 
 Clone the project
-
+</br>
 `
 https://github.com/Nickeldon/FileHistoryEnhancer
 `
+</br></br>
 Go to the project directory
+</br>
 `
 cd FileHistoryEnhancer
 `
-</br>
+</br></br>
     Install dependencies
+</br>
 `
 npm install
 `
@@ -83,8 +86,9 @@ or
 `
 yarn install
 `
-</br>
+</br></br>
     start the program
+</br>
 `
 node .
 `
