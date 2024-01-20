@@ -21,9 +21,9 @@
 
 ### :camera: Screenshots
 <p>Before</p>
-<div align="center"><img src="https://github.com/Nickeldon/FileHistoryEnhancer/blob/main/Example/before.png" alt='image' width='800'/></div></br>
+<div align="center"><img src="https://github.com/Nickeldon/FileHistoryEnhancer/blob/main/Example/before.png" alt='image' height='800'/></div></br>
 <p>After</p>
-<div align="center"><img src="https://github.com/Nickeldon/FileHistoryEnhancer/blob/main/Example/after.png" alt='image' width='800'/></div></br>
+<div align="center"><img src="https://github.com/Nickeldon/FileHistoryEnhancer/blob/main/Example/after.png" alt='image' height='800'/></div></br>
 
 
 
