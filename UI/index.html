@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @font-face {
+            font-family: Ubuntu;
+            src: url('./Addons/Ubuntu-Light.ttf');
+        }
+    </style>
+    <link href='./Addons/light-dark-mode.css' rel='stylesheet'>
+</head>
+<body style="width: 1024px; height: 576px; overflow: hidden; border-radius: 10px; border-style: solid; border-width: 3px; border-color: black;">
+   
+    <div class="main" id="main" style="width: 1024px; height: 576px; position: relative;">
+        <div style="position: absolute; width: 100%; height: 100%; border-radius: 10px;">
+            <object data="./Addons/bg.html" type="text/html" style="width: 1024px; height: 576px; border-radius: 10px;"></object>
+        </div>
+
+        <div class="filter" id="filter" style="background-color: black; opacity: 5%; width: 100%; height: 100%; position: absolute;"></div>
+            <div style="width: 100%; height: 50px; position: absolute; top: 30px; left: 50px;">
+                <h3 style="text-align:left; color: rgb(86, 86, 146); font-weight: 700; -webkit-text-stroke: 1px white ">WINDOWS FILE HISTORY<br>
+                    <span style="text-align: center;">ENHANCER</span></h3>
+                
+                    <div style="position: absolute; right: 100px; top: 25px; border-radius: 50%;">
+                        <i class="gg-dark-mode" onclick="colormode()"></i>
+                    </div>
+            </div>
+    
+            <div id="menu1" class="menu1" style="background-color: white; color: black; border-radius: 10px; border-width: 3px; opacity: 70%; border-style: dashed; border-color: gray; height: 300px; width: 80%; position: absolute; display: block; bottom: 10%; left: 10%; align-items: center; justify-content: center;">
+                <h4 style="text-align: center; margin-top: 70px; font-size: larger;">
+                    Choose the folder you want to transform
+                </h4>
+                <a onclick="document.getElementById('div-select').click()" class="btn-select" id="btn-select" style="color: black;">
+                        <span>
+                            No folder selected
+                        </span>
+                </a>
+                <h4 style="text-align: center; margin-top: 100px; margin-right: 15px;" id="path-ph"></h4>
+                <a><input type="file" id="div-select" class="div-select" oninput="handler()" webkitdirectory = multiple style="display: none;"></a>
+                
+            </div>
+            <div id="warn-multichoice" class="warn-multichoice" style="background-color: white; color: black; display: none; opacity: 70%; border-radius: 10px; border-width: 3px; border-style: solid; border-color: gray;  position: absolute; width: 80%; height: 300px; bottom: 10%; left: 10%; background-color: rgb(255, 255, 255);">
+                <h3 style="text-align: center; margin-top: 60px;">
+                    There seems to be multiple subfolders inside the selected folder <br> Choose select the folders you wish to transform
+                </h3>
+                <div class="sub-select1" id="sub-select1" style="width: 90%; height: 150px; border-radius: 10px; border-color: black; border-style: solid; border-width: 3px; position: absolute; background-color: rgb(231, 231, 231); left: 5%; overflow-y:scroll;">
+    
+                </div>
+            </div>  
+    
+            <div class="warn-recursive" id="warn-recursive" style="background-color: white; color: black; display: none; opacity: 70%; border-radius: 10px; border-width: 3px; border-style: solid; border-color: gray;  position: absolute; width: 80%; height: 300px; bottom: 10%; left: 10%; background-color: rgb(255, 255, 255);">
+                <h3 style="text-align: center; margin-top: 60px;">
+                    Do you wish to enable the recursive search for the selected subfolders?
+                </h3>
+    
+                <div style="width: 100%; height: 50px; position: relative; margin-top: 70px; display: block ;">
+                    <a onclick="recursivech(true)" id="choice-rec" class="choice-rec"><span>Yes</span></a><br><br><br>
+                    <a onclick="recursivech(false)" id="choice-rec" class="choice-rec"><span>No</span></a>
+                </div>
+            </div>
+        
+    </div>
+        
+        
+
+</body>
+
+<style>
+    .warn-recursive, .warn-multichoice, .menu1, .filter{
+        transition: all .5s ease-out;
+    }
+    .warn-recursive a{
+        text-align: center;
+        width: 100%;   
+        height: 40px;
+        background-color: white;
+        color: black;
+        position: absolute;
+        transition: all 1s ease-out;
+        text-decoration: none;
+        justify-content: center;
+        align-items: center;
+        vertical-align: middle;
+        letter-spacing: 2px;
+    }
+    .warn-recursive a span{
+        position: absolute;
+        top: 25%;
+    }
+    .warn-recursive a:hover{
+        cursor: pointer;
+        background-color: rgb(165, 165, 165);
+        padding-bottom: 10px;
+        letter-spacing: 5px;
+    }
+    body{
+        font-family:Ubuntu, sans-serif;
+    }
+    .btn-select{
+        text-decoration: none;
+        color: black;
+        width: 150px;
+        height: 40px;
+        position: absolute;
+        top: 45%;
+        left: 40%;
+        border-radius: 5px;
+        border-width: 3px;
+        border-style: double;
+        border-color: gray;
+        transition: all 1s ease-out;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn-select span{
+        text-align: center;
+        margin-top: 70%;
+        margin-left: 20%;
+        font-size: 11px;
+    }
+    .btn-select:hover{
+        cursor: pointer;
+        transform: scale(1.1);
+        border-color: rgb(120, 70, 28);
+
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.min.js"></script>
+<script src="handler.js"></script>
+</html>
