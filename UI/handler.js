@@ -14,6 +14,7 @@ function colormode(){
             document.getElementsByClassName('choice-rec')[i].style.color = 'white'
             document.getElementsByClassName('choice-rec')[i].style.backgroundColor = 'black'
         }
+        document.getElementsByClassName('gg-dark-mode')[0].style.backgroundColor = 'black'
     } else{
         document.getElementById('filter').style.opacity = '5%'
         document.getElementById('menu1').style.backgroundColor = 'white'
@@ -27,6 +28,7 @@ function colormode(){
             document.getElementsByClassName('choice-rec')[i].style.color = 'black'
             document.getElementsByClassName('choice-rec')[i].style.backgroundColor = 'white'
         }
+        document.getElementsByClassName('gg-dark-mode')[0].style.backgroundColor = null
     }
 }
 
