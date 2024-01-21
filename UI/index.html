@@ -42,6 +42,15 @@
                 <a><input type="file" id="div-select" class="div-select" oninput="handler()" webkitdirectory = multiple style="display: none;"></a>
                 
             </div>
+            
+            <div class="security-notification" id="sec-notif" style="transform: scale(1); display: block; transition: all 1s ease-out; position: absolute; top: 25%; left: 18%; height: 300px; width: 650px; background-color: white; opacity: 80%; border-radius: 10px; border-width: 3px; border-color: rgb(133, 133, 133); border-style: solid; align-items: center; justify-content: center;">
+                <h3 style="font-size: 17px; text-align: center; margin-top: 40px;">
+                    Due to security restrictions by Windows, <br>please enter the full directory path below
+                </h3>
+
+                <input type="text" placeholder="C:\users\user\Documents\FileHistory" style="transition: all 1s ease-out; width: 500px; position: absolute; left: 11%; top: 50%; height: 25px; border-radius: 10px; border-style: dashed; border-color: black; align-items: center; text-align: center; justify-content: center; ">
+            </div>
+
             <div id="warn-multichoice" class="warn-multichoice" style="background-color: white; color: black; display: none; opacity: 70%; border-radius: 10px; border-width: 3px; border-style: solid; border-color: gray;  position: absolute; width: 80%; height: 300px; bottom: 10%; left: 10%; background-color: rgb(255, 255, 255);">
                 <h3 style="text-align: center; margin-top: 60px;">
                     There seems to be multiple subfolders inside the selected folder <br> Choose select the folders you wish to transform
@@ -69,6 +78,13 @@
 </body>
 
 <style>
+    .security-notification input:focus{
+        outline-width: 0;
+        outline: none;
+        border-color: rgb(120, 70, 28);
+        caret-color: transparent;
+    }
+    
     .warn-recursive, .warn-multichoice, .menu1, .filter{
         transition: all .5s ease-out;
     }
@@ -116,9 +132,9 @@
         justify-content: center;
     }
     .btn-select span{
-        text-align: center;
-        margin-top: 70%;
-        margin-left: 20%;
+        position: absolute;
+        top: 30%;
+        left: 20%;
         font-size: 11px;
     }
     .btn-select:hover{
