@@ -10,6 +10,7 @@
             src: url('./Addons/Ubuntu-Light.ttf');
         }
     </style>
+    <link rel="stylesheet" href="./Addons/Multiselector/styles/multiselect.css">
     <link href='./Addons/light-dark-mode.css' rel='stylesheet'>
 </head>
 <body style="background-color: black; width: 1024px; height: 576px; overflow: hidden; border-radius: 10px; border-style: solid; border-width: 3px; border-color: black;">
@@ -33,7 +34,6 @@
                 <h4 style="text-align: center; margin-top: 70px; font-size: larger;">
                     Choose the folder you want to transform
                 </h4>
-                
                     <a onclick="document.getElementById('div-select').click()" class="btn-select" id="btn-select" style="color: black;">
                         <span>
                             No folder selected
@@ -48,14 +48,12 @@
                 <h3 style="font-size: 17px; text-align: center; margin-top: 40px;">
                     Due to security restrictions by Windows, <br>please enter the full directory path below
                 </h3>
-                <form action="http://localhost:5501/request" method="post">
                 <input type="text" id="full-path" placeholder="C:\users\user\Documents\FileHistory" style="transition: all 1s ease-out; width: 80%; position: absolute; left: 11%; top: 50%; height: 8.3%; border-radius: 10px; border-style: dashed; border-color: black; align-items: center; text-align: center; justify-content: center; ">
                     <div style="position: absolute; top: 60%; left: 43%;">
                         <a class="btn-trapezoid-outline" onclick="handler(true)">
                             <span style="position: absolute; margin-top: 3px; left: 35px;">Done</span>
                         </a>
                     </div>
-                </form>
                 
             </div>
 
@@ -64,8 +62,10 @@
                     There seems to be multiple subfolders inside the selected folder <br> Choose select the folders you wish to transform
                 </h3>
                 <div class="sub-select1" id="sub-select1" style="width: 90%; height: 150px; border-radius: 10px; border-color: black; border-style: solid; border-width: 3px; position: absolute; background-color: rgb(231, 231, 231); left: 5%; overflow-y:scroll;">
-    
-                </div>
+                    <select id="Multidirselect" class="Multidirselect" multiple>
+                        <option value="Current">Current one</option>
+                    </select>
+                </div> 
             </div>  
     
             <div class="warn-recursive" id="warn-recursive" style="background-color: white; color: black; display: none; opacity: 70%; border-radius: 10px; border-width: 3px; border-style: solid; border-color: gray;  position: absolute; width: 80%; height: 300px; bottom: 10%; left: 10%; background-color: rgb(255, 255, 255);">
@@ -87,12 +87,32 @@
 
 <style>
 
+.multiselect-wrapper {
+ width: 90%;
+ margin-top: 20px;
+ margin-left: 15px;
+ border-radius: 10px;
+ overflow: hidden;
+ text-align: center;
+}
+
+.multiselect-wrapper option{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+option{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .btn-wrap{
     position: absolute;
     top: 87%;
     left: 41%;
 }
-
 
 .btn-trapezoid-outline{
     width: 100px;
@@ -107,18 +127,6 @@
     border-style: dashed;
     transition: all .5s ease-out;
     border-color: black;
-  /*display: block;
-  color: black;
-  padding: 13px 70px;
-  border: 1px solid black;
-  transform: perspective(100px) rotateX(-35deg) translateZ(-25px) translateY(-5px);
-  backface-visibility: hidden;
-  transition: all .3s ease-out;
-  span{
-    text-align: center;
-    transform: perspective(100px);
-    font-size: 15px;
-  }*/
 }
 
 .btn-trapezoid-outline:hover{
@@ -194,6 +202,7 @@
     }
 </style>
 
+<script src="./Addons/Multiselector/multiselect.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.min.js"></script>
 <script src="handler.js"></script>

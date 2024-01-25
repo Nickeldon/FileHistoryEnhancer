@@ -1,5 +1,7 @@
 localStorage.clear()
 document.getElementById('sec-notif').style.transform = 'scale(0)'
+document.getElementById('Multidirselect').click()
+document.multiselect('#Multidirselect');
 
 function colormode(){
     if(document.getElementById('menu1').style.backgroundColor === 'white'){
@@ -60,10 +62,25 @@ function handler(value){
       }
     })
     .then(response => {
-    if(response.status === 404){
+      console.log(response)
+    switch(response.status){
+      case 404: {
       console.log('path was not valid')
+      document.getElementsByClassName('btn-select')[0].children[0].innerHTML = 'No Folder selected'
+      document.getElementById('path-ph').innerHTML = null
+      }break;
+      case 205: {
+        console.log('path was valid')
+      }break;
+      case 201: {
+        
+        console.log('There is multiple paths')
+        document.getElementById('menu1').style.display = 'none'
+        document.getElementById('Multidirselect').toggleAttribute()
+        document.getElementById('warn-multichoice').style.display = 'block'
+      }break;
     }
-    console.log(response)})
+  })
     .then(message => {
       console.log(message);
       // Handle the response as needed
