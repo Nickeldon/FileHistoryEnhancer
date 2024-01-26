@@ -6,6 +6,7 @@
 	cursor: pointer;
 	font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
 	text-align: center;
+	transition: all 1s ease-out;
 }
 
 .multiselect-wrapper .multiselect-input {
@@ -31,6 +32,7 @@
 	border-bottom-left-radius: 2px;
 	border-bottom-right-radius: 2px;
 	margin-top: -2px;
+	transition: all 1s ease-out;
 }
 
 	.multiselect-wrapper .multiselect-list.active {
@@ -70,17 +72,20 @@
 	.multiselect-wrapper ul li {
 		padding-right: 20px;
 		display: block;
+		transition: all 1s ease-out;
 	}
 
 		.multiselect-wrapper ul li.active {
 			background-color: rgb(0, 102, 255);
 			color: white;
+			transition: all 1s ease-out;
 		}
 
 		.multiselect-wrapper ul li:hover {
 			background-color: rgb(0, 102, 255);
 			color: white;
 			cursor: pointer;
+			transition: all 1s ease-out;
 		}
 
 .multiselect-input-div {
@@ -124,6 +129,7 @@
 	text-align: center;
 	display: inline-block !important;
 	margin-top: 17px;
+	transition: all 1s ease-out;
 	margin-left: -42px;
 }
 

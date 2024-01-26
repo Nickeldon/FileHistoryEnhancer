@@ -1,7 +1,5 @@
 localStorage.clear()
 document.getElementById('sec-notif').style.transform = 'scale(0)'
-document.getElementById('Multidirselect').click()
-document.multiselect('#Multidirselect');
 
 function colormode(){
     if(document.getElementById('menu1').style.backgroundColor === 'white'){
@@ -73,11 +71,19 @@ function handler(value){
         console.log('path was valid')
       }break;
       case 201: {
-        
-        console.log('There is multiple paths')
-        document.getElementById('menu1').style.display = 'none'
-        document.getElementById('Multidirselect').toggleAttribute()
-        document.getElementById('warn-multichoice').style.display = 'block'
+        $.getJSON('http://localhost:8000/request', (data) => {
+          const folders = JSON.parse(data.message)
+          //console.log(folders)
+          folders.forEach((str) => {
+            var strchoice = document.createElement('option')
+            strchoice.text = str
+            strchoice.value = str
+            document.getElementById('Multidirselect').add(strchoice)
+          })
+          document.multiselect('#Multidirselect');
+          document.getElementById('menu1').style.display = 'none'
+          document.getElementById('warn-multichoice').style.display = 'block'
+        })
       }break;
     }
   })
@@ -86,36 +92,42 @@ function handler(value){
       // Handle the response as needed
     })
     .catch(error => console.error('Error:', error));
-
-        /*fetch(url, {
-            method: 'GET',
-          })
-          .then(response => {console.log(response)})
-          .then(data => {
-            // Handle the transformed data received from the server
-            console.log('Transformed Data:', data);
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });*/
-
-        /*const xhttp = new XMLHttpRequest()
-        xhttp.open("GET", tempurl, false)
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send()*/
-        /*fetch(`http://localhost:5501/request?METADATA=${metadata}`,{
-                method: "GET",
-                headers: {"Content-Type": "application/json"}
-            }).then(res => {
-                res.json()
-            console.log(res)})
-            .then(mes => {
-                console.log(mes)
-            })
-            .catch(err => {
-                console.log('ERROR: ', err)
-            })*/
     }
+}
+
+function Multidirres(){
+  var choices = []
+  for(i = 0; i < document.querySelector('.Multidirselect').children.length; i++){
+    if(document.querySelector('.Multidirselect').children[i].selected){
+      choices.push(document.querySelector('.Multidirselect').children[i].value)
+    }
+  }
+  console.log(choices)
+  fetch(`http://localhost:8000/multichoice?METADATA=${JSON.stringify({"data": choices})}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+  .then((res) => {
+    console.log(res)
+    
+    switch(res.status){
+      case 205: {
+        console.log('PATH IS RECURSVE')
+      }break;
+
+      case 201: {
+        console.log('TASK COMPLETED')
+      }break;
+    }
+  })
+  .then((mes) => {
+    console.log(mes)
+  })
+  .catch((e) => {
+    console.log(e)
+  })
 }
 
 function recursivech(choice){

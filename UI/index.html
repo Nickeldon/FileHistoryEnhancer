@@ -62,10 +62,13 @@
                     There seems to be multiple subfolders inside the selected folder <br> Choose select the folders you wish to transform
                 </h3>
                 <div class="sub-select1" id="sub-select1" style="width: 90%; height: 150px; border-radius: 10px; border-color: black; border-style: solid; border-width: 3px; position: absolute; background-color: rgb(231, 231, 231); left: 5%; overflow-y:scroll;">
-                    <select id="Multidirselect" class="Multidirselect" multiple>
-                        <option value="Current">Current one</option>
+                    <select id="Multidirselect" class="Multidirselect" multiple autofocus>
+                        <option value="">Current</option>
                     </select>
-                </div> 
+                <div style="position: relative; width: 100%; height: 20px;" class="cont-btn">
+                    <a style="text-align: center; text-decoration: none; position: absolute; left: 43%;" onclick="Multidirres()">- CONTINUE -</a>
+                </div>
+                 </div> 
             </div>  
     
             <div class="warn-recursive" id="warn-recursive" style="background-color: white; color: black; display: none; opacity: 70%; border-radius: 10px; border-width: 3px; border-style: solid; border-color: gray;  position: absolute; width: 80%; height: 300px; bottom: 10%; left: 10%; background-color: rgb(255, 255, 255);">
@@ -86,6 +89,19 @@
 </body>
 
 <style>
+
+.cont-btn a{
+    transition: all 1s ease-out;
+    text-decoration: none;
+    color: black;
+}
+
+.cont-btn a:hover{
+    margin-left: -10px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    color: rgb(59, 37, 37);
+}
 
 .multiselect-wrapper {
  width: 90%;
@@ -202,7 +218,9 @@ option{
     }
 </style>
 
-<script src="./Addons/Multiselector/multiselect.min.js"></script>
+<script src="./Addons/Multiselector/scripts/multiselect.core.js"></script>
+<script src="./Addons/Multiselector/scripts/helper.js"></script>
+<script src="./Addons/Multiselector/scripts/multiselect.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.min.js"></script>
 <script src="handler.js"></script>
