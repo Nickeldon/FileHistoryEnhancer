@@ -1,11 +1,12 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const PORT = 8000;
 const fs = require('fs')
 const app = express();
 var path
 var multidirs
+var ans
+const transform = require('./main').Transformator
 
 app.use(cors())
 app.listen(PORT, () => {
@@ -26,11 +27,13 @@ app.get('/request', (req, res, next) => {
         var data = MultidirVerif(path)
         if(data[0]){
             const folders = data[1]
-            console.log(folders)
-            //res.send('MULTIPLE FOLDERS')
             res.status(201).json({message: JSON.stringify(folders), status: 201})
         }else{
-            res.sendStatus(205)
+            transform(path, false).then(() => {
+                res.sendStatus(205)
+            }).catch((err) => {
+                console.log(err)
+            })
         }
     }else{
         res.sendStatus(404)
@@ -48,6 +51,9 @@ app.get('/multichoice', (req, res, next) => {
         console.log('Ask for recursion')
         res.sendStatus(205)
     } else{
+        multidirs.forEach((data) => {
+            (async() => transform(`${path}\\${data}`, false))()
+        })
         console.log('Complete request')
         res.sendStatus(201)
     }
@@ -55,14 +61,27 @@ app.get('/multichoice', (req, res, next) => {
 
 app.get('/recursion', (req, res, next) => {
     try {
-        const ans = JSON.parse(req.query.METADATA).data
+        ans = JSON.parse(req.query.METADATA).data
     } catch (e) {
         console.log(e)
     }
 
     if(ans){
+        multidirs.forEach((data) => {
+            if(data !== ""){
+            (async() => transform(`${path}\\${data}`, true))()}
+            else{
+                (async() => transform(`${path}\\${data}`, false))()
+            }
+        })
+        res.sendStatus(200)
         console.log('DO RECURSIVE TRANSFORMATION')
     } else{
+        multidirs.forEach((data) => {
+            if(data !== ""){
+            (async() => transform(`${path}\\${data}`, false))()}
+        })
+            res.sendStatus(200)
         console.log('DO SIMPLE TRANSFORMATION')
     }
 })

@@ -115,6 +115,8 @@ function Multidirres(){
     switch(res.status){
       case 205: {
         console.log('PATH IS RECURSVE')
+        document.getElementById('warn-multichoice').style.display = 'none'
+        document.getElementById('warn-recursive').style.display = 'block'
       }break;
 
       case 201: {
@@ -131,10 +133,16 @@ function Multidirres(){
 }
 
 function recursivech(choice){
-    if(choice){
-      
-        
-    }else{
+    fetch(`http://localhost:8000/recursion?METADATA=${JSON.stringify({"data": choice})}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).then((res) => {
+      console.log(res)
+    }).then((mes) => {
 
-    }
+    }).catch((e) => {
+      console.log(e)
+    })
 }
