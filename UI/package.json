@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Nickeldon/FileHistoryEnhancer/issues"
   },
-  "homepage": "https://github.com/Nickeldon/FileHistoryEnhancer#readme"
+  "homepage": "https://github.com/Nickeldon/FileHistoryEnhancer#readme",
+  "dependencies": {
+    "electron": "^28.2.0"
+  }
 }
