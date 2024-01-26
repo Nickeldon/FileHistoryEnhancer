@@ -101,7 +101,7 @@ function Multidirres(){
     if(document.querySelector('.Multidirselect').children[i].selected){
       choices.push(document.querySelector('.Multidirselect').children[i].value)
     }
-  }
+  } 
   console.log(choices)
   fetch(`http://localhost:8000/multichoice?METADATA=${JSON.stringify({"data": choices})}`, {
     method: 'GET',
