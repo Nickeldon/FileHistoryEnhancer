@@ -20,7 +20,15 @@ function colormode(){
         document.getElementById('sec-notif').style.color = 'white'
         document.querySelector('.security-notification input').style.color = 'white'
         document.querySelector('.security-notification input').style.backgroundColor = 'black'
-        document.querySelector('.security-notification input').style.borderColor = 'white'
+        document.querySelector('.security-notification input').style.borderColor = 'white';
+        document.getElementById('sub-select1').style.backgroundColor = 'black'
+        document.getElementById('sub-select1').style.borderColor = 'white'
+        document.getElementById('sel-txt').style.color = 'white';
+        //console.log(document.querySelector('.multiselect-wrapper').style)
+        //document.querySelector('.multiselect-wrapper').style.borderColor = 'white'
+        //document.querySelector('.multiselect-wrapper').style.backgroundColor = 'black'
+        //console.log(document.querySelector('.multiselect-wrapper').style)
+        document.getElementById('top-bar').classList.add('invert')
     } else{
         document.getElementById('filter').style.opacity = '5%'
         document.getElementById('menu1').style.backgroundColor = 'white'
@@ -36,7 +44,8 @@ function colormode(){
             document.getElementsByClassName('choice-rec')[i].style.backgroundColor = 'white'
         }
         document.getElementsByClassName('gg-dark-mode')[0].style.backgroundColor = null
-        document.getElementById('sec-notif').style.color = 'black'
+        document.getElementById('sec-notif').style.color = 'black';
+        document.getElementById('top-bar').classList.remove('invert')
     }
 }
 
@@ -65,7 +74,18 @@ function handler(value){
       case 404: {
       console.log('path was not valid')
       document.getElementsByClassName('btn-select')[0].children[0].innerHTML = 'No Folder selected'
-      document.getElementById('path-ph').innerHTML = null
+      document.getElementById('path-ph').innerHTML = null;
+
+        document.getElementById('notification').style.display = 'block';
+        document.getElementById('err-path').style.display = 'block';
+        document.getElementById('notification').style.opacity = '100%';
+        setTimeout(() => {
+        document.getElementById('notification').style.opacity = '0%';
+        setTimeout(() => {
+          document.getElementById('err-path').style.display = 'none';
+          document.getElementById('notification').style.display = 'none';
+        }, 1000)
+        }, 3000)
       }break;
       case 205: {
         console.log('path was valid')
@@ -87,11 +107,7 @@ function handler(value){
       }break;
     }
   })
-    .then(message => {
-      console.log(message);
-      // Handle the response as needed
-    })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {console.error('Error:', error); error()});
     }
 }
 
@@ -120,15 +136,13 @@ function Multidirres(){
       }break;
 
       case 201: {
-        console.log('TASK COMPLETED')
+        success()
       }break;
     }
   })
-  .then((mes) => {
-    console.log(mes)
-  })
   .catch((e) => {
-    console.log(e)
+    console.log(e);
+    error()
   })
 }
 
@@ -139,10 +153,39 @@ function recursivech(choice){
         'Content-Type': 'application/json',
       }
     }).then((res) => {
-      console.log(res)
-    }).then((mes) => {
-
+      if(res.status === 200){
+        success()
+      } else{
+        error()
+      }
     }).catch((e) => {
       console.log(e)
+      error()
     })
+}
+
+function error(){
+        document.getElementById('notification').style.display = 'block';
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('notification').style.opacity = '100%';
+        setTimeout(() => {
+        document.getElementById('notification').style.opacity = '0%';
+        setTimeout(() => {
+          document.getElementById('notification').style.display = 'none';
+          document.getElementById('error').style.display = 'none';
+        }, 1000)
+        }, 3000)
+}
+
+function success(){
+  document.getElementById('notification').style.display = 'block';
+        document.getElementById('success').style.display = 'block';
+        document.getElementById('notification').style.opacity = '100%';
+        setTimeout(() => {
+        document.getElementById('notification').style.opacity = '0%';
+        setTimeout(() => {
+          document.getElementById('notification').style.display = 'none';
+          document.getElementById('success').style.display = 'none';
+        }, 1000)
+        }, 3000)
 }

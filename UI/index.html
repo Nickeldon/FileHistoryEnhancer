@@ -13,21 +13,21 @@
     <link rel="stylesheet" href="./Addons/Multiselector/styles/multiselect.css">
     <link href='./Addons/light-dark-mode.css' rel='stylesheet'>
 </head>
-<body style="background-color:transparent; width: 1024px; height: 576px; overflow: hidden; border-radius: 10px;">
+<body style="background-color:transparent; width: 1024px; height: 576px; overflow: hidden; border-radius: 10px; transition: all .5s ease-out;">
    
     <div class="main" id="main" style="width: 1024px; height: 576px; position: relative;">
         <div style="position: absolute; width: 100%; height: 100%; border-radius: 10px;">
-            <object data="./Addons/bg.html" type="text/html" style="width: 1024px; height: 576px; border-radius: 10px;"></object>
+            <object data="./Addons/bg.html" type="text/html" style="width: 1024px; height: 576px; border-radius: 10px; background-color: transparent;"></object>
         </div>
 
-        <div class="filter" id="filter" style="background-color: black; opacity: 5%; width: 100%; height: 100%; position: absolute;"></div>
+        <div class="filter" id="filter" style="background-color: black; opacity: 5%; width: 100%; height: 100%; position: absolute; border-radius: 10px;"></div>
 
-        <div class="top-bar" style="height: 60px; width: 100%; position:absolute; top: 0;">
-            <a style="position:absolute; top: 30px; right: 60px; height: 20px; opacity: 70%;" class="top-btn-app" id="close-app" onclick="setTimeout(() => {window.close()}, 400)">
-                <img src="./Addons/close.png" style="height: 100%;">
+        <div class="top-bar" id="top-bar" style="height: 60px; width: 100%; position:absolute; top: 0; background-color: transparent; transition: all 1s ease-out;">
+            <a style="position:absolute; top: 30px; right: 60px; height: 20px; opacity: 70%;" class="top-btn-app" id="close-app" onclick="document.querySelector('body').style.opacity = '0%' ;setTimeout(() => {window.close()}, 700)">
+                <img src="./Addons/close.png" style="height: 100%; transition: all 1s ease-out;">
             </a>
             <a style="position:absolute; top: 30px; right: 100px; height: 20px; opacity: 70%;" class="top-btn-app" id="hide-app" onclick="window.minimize()">
-                <img src="./Addons/minimize.png" style="height: 100%;">
+                <img src="./Addons/minimize.png" style="height: 100%; transition: all 1s ease-out;">
             </a>
         </div>
             <div style="width: 100%; height: 50px; position: absolute; top: 85px; left: 50px;">
@@ -75,7 +75,7 @@
                         <option value="">Current</option>
                     </select>
                 <div style="position: relative; width: 100%; height: 20px;" class="cont-btn">
-                    <a style="text-align: center; text-decoration: none; position: absolute; left: 43%;" onclick="Multidirres()">- CONTINUE -</a>
+                    <a style="text-align: center; text-decoration: none; position: absolute; left: 43%;" onclick="Multidirres()" id="sel-txt">- CONTINUE -</a>
                 </div>
                  </div> 
             </div>  
@@ -90,6 +90,24 @@
                     <a onclick="recursivech(false)" id="choice-rec" class="choice-rec"><span>No</span></a>
                 </div>
             </div>
+
+            <div class="notification" id="notification" style="display: none;">
+                
+                <span id="success" style="position: absolute; top: 25px; left: 100px; display:none;">
+                    <img src="./Addons/success.png" style="height: 40px; position:absolute; top: -13px; left: -50px" id="icn-cor">
+                    success
+                </span>
+                
+                <span id="error" style="position: absolute; top: 25px; left: 60px; display:none;" >
+                    <img src="./Addons/error.png" style="height: 30px; position:absolute; top: -5px; left: -35px;" id="icn-err">
+                    Something went wrong
+                </span>
+
+                <span id="err-path" style="position: absolute; top: 25px; left: 80px; display:none;" >
+                    <img src="./Addons/error.png" style="height: 30px; position:absolute; top: -5px; left: -40px;" id="icn-err">
+                    Unvalid directory
+                </span>
+            </div>
         
     </div>
         
@@ -98,6 +116,32 @@
 </body>
 
 <style>
+
+.invert { filter: invert(100%); }
+
+.notification{
+    height: 70px;
+    width: 250px;
+    background-color: rgb(26, 23, 23);
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    animation: notif 2s;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: block;
+    transition: all 1s ease-out;
+}
+
+@keyframes notif {
+    from{
+        right: -250px;
+    }
+    to{
+        right: 0px;
+    }
+}
 
 .top-bar{
     -webkit-app-region: drag;
