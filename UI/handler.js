@@ -1,8 +1,18 @@
-localStorage.clear()
 document.getElementById('sec-notif').style.transform = 'scale(0)'
 
-function colormode(){
-    if(document.getElementById('menu1').style.backgroundColor === 'white'){
+try {
+  console.log(localStorage.getItem("colormode"))
+  colormode(localStorage.getItem("colormode"))
+} catch (e) {colormode("light")}
+
+function colorbridge(){
+  if(document.getElementById('menu1').style.backgroundColor === 'white') colormode("dark")
+  else colormode("light")
+}
+
+function colormode(pref){
+    if(pref === 'dark'){
+        localStorage.setItem("colormode", "dark")
         document.getElementById('filter').style.opacity = '70%'
         document.getElementById('menu1').style.backgroundColor = 'black'
         document.getElementById('sec-notif').style.backgroundColor = 'black'
@@ -25,11 +35,23 @@ function colormode(){
         document.getElementById('sub-select1').style.borderColor = 'white'
         document.getElementById('sel-txt').style.color = 'white';
         //console.log(document.querySelector('.multiselect-wrapper').style)
-        //document.querySelector('.multiselect-wrapper').style.borderColor = 'white'
+        //document.querySelector('.multiselect-wrapper').classList.add('invert')
         //document.querySelector('.multiselect-wrapper').style.backgroundColor = 'black'
-        //console.log(document.querySelector('.multiselect-wrapper').style)
-        document.getElementById('top-bar').classList.add('invert')
-    } else{
+        try {
+          document.querySelector('.multiselect-wrapper ul').style.backgroundColor = 'black';
+        document.querySelector('.multiselect-wrapper ul').style.color = 'white';
+        document.querySelector('.multiselect-list').style.color = 'white';
+        document.querySelector('.multiselect-list').style.backgroundColor = 'black'; 
+        } catch (e) {
+          console.log(e)
+        }
+        document.getElementById('top-bar').classList.add('invert');
+        document.getElementById('err-path').style.color = 'white'
+        document.getElementById('error').style.color = 'white'
+        document.getElementById('success').style.color = 'white';
+        document.getElementById("notification").style.backgroundColor = 'black'
+    } else if(pref === 'light'){
+        localStorage.setItem("colormode", "light")
         document.getElementById('filter').style.opacity = '5%'
         document.getElementById('menu1').style.backgroundColor = 'white'
         document.getElementById('sec-notif').style.backgroundColor = 'white'
@@ -45,13 +67,29 @@ function colormode(){
         }
         document.getElementsByClassName('gg-dark-mode')[0].style.backgroundColor = null
         document.getElementById('sec-notif').style.color = 'black';
-        document.getElementById('top-bar').classList.remove('invert')
+        document.getElementById('top-bar').classList.remove('invert');
+        try {
+          document.querySelector('.multiselect-wrapper').classList.remove('invert');
+          document.querySelector('.multiselect-wrapper ul').style.backgroundColor = 'white';
+          document.querySelector('.multiselect-wrapper ul').style.color = 'black';
+          document.querySelector('.multiselect-list').style.color = 'black';
+          document.querySelector('.multiselect-list').style.backgroundColor = 'white'; 
+        } catch (e) {
+          console.log(e)
+        }
+        document.getElementById('sub-select1').style.backgroundColor = 'white'
+        document.getElementById('sub-select1').style.borderColor = 'black'
+        document.getElementById('sel-txt').style.color = 'black';
+        document.getElementById('err-path').style.color = 'black'
+        document.getElementById('error').style.color = 'black'
+        document.getElementById('success').style.color = 'black';
+        document.getElementById("notification").style.backgroundColor = 'white'
     }
 }
 
-function handler(value){
+function handler(value){  
+   console.log('entered')
     if(!value){
-    
     document.getElementById('sec-notif').style.visibility = 'visible'
     document.getElementById('sec-notif').style.transform = 'scale(1)'
     document.getElementsByClassName('btn-select')[0].children[0].innerHTML = 'Folder selected'} 
@@ -71,11 +109,12 @@ function handler(value){
     .then(response => {
       console.log(response)
     switch(response.status){
-      case 404: {
+      case 220: {
       console.log('path was not valid')
       document.getElementsByClassName('btn-select')[0].children[0].innerHTML = 'No Folder selected'
       document.getElementById('path-ph').innerHTML = null;
-
+      document.getElementById('sec-notif').style.transform = 'scale(0)'
+      document.getElementById('sec-notif').style.visibility = 'hidden'
         document.getElementById('notification').style.display = 'block';
         document.getElementById('err-path').style.display = 'block';
         document.getElementById('notification').style.opacity = '100%';
@@ -84,8 +123,9 @@ function handler(value){
         setTimeout(() => {
           document.getElementById('err-path').style.display = 'none';
           document.getElementById('notification').style.display = 'none';
-        }, 1000)
-        }, 3000)
+          window.location.reload()
+        }, 500)
+        }, 2000)
       }break;
       case 205: {
         console.log('path was valid')

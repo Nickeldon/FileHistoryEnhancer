@@ -2,7 +2,12 @@ const electron = require('electron');
 const {app, BrowserWindow} = electron
 const url = require('url')
 const path = require('path');
-require("./server")
+try {
+  require("./server")  
+} catch (e) {
+  console.log(e)
+}
+
 
 //require('electron-reload')(__dirname,{electron: path.join(__dirname, 'node_modules', '.bin', 'electron')})
 
@@ -23,13 +28,22 @@ function createWindow(){
     titleBarStyle: 'hidden',
     transparent: true
   });
-
   windowObj.loadURL(url.format(path.join(__dirname, 'index.html')));
-
+  //windowObj.webContents.openDevTools()
   windowObj.on('closed', () => {
     windowObj = null
   })
+
+  //Workaround for frame top-bar glitch (electron 25)
+  windowObj.on('blur', () => {
+    windowObj.setBackgroundColor('#00000000')
+  })
+  
+  windowObj.on('focus', () => {
+    windowObj.setBackgroundColor('#00000000')
+  })
 }
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()

@@ -36,7 +36,7 @@ app.get('/request', (req, res, next) => {
             })
         }
     }else{
-        res.sendStatus(404)
+        res.sendStatus(220)
     }}
 });
 

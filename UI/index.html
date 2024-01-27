@@ -35,7 +35,7 @@
                     <span style="text-align: center;">ENHANCER</span></h3>
                 
                     <div style="position: absolute; right: 110px; top: 13px; border-radius: 50%;">
-                        <i class="gg-dark-mode" onclick="colormode()"></i>
+                        <i class="gg-dark-mode" onclick="colorbridge()"></i>
                     </div>
             </div>
     
@@ -43,13 +43,13 @@
                 <h4 style="text-align: center; margin-top: 70px; font-size: larger;">
                     Choose the folder you want to transform
                 </h4>
-                    <a onclick="document.getElementById('div-select').click()" class="btn-select" id="btn-select" style="color: black;">
+                    <a onclick="document.getElementById('div-select').click(); console.log('yes')" class="btn-select" id="btn-select" style="color: black;">
                         <span>
                             No folder selected
                         </span>
                 </a>
                 <h4 style="text-align: center; margin-top: 100px; margin-right: 15px;" id="path-ph"></h4>
-                <a><input type="file" id="div-select" class="div-select" oninput="handler()" webkitdirectory = multiple style="display: none;"></a>
+                <input type="file" id="div-select" class="div-select" oninput="handler()" webkitdirectory style="display: none;">
                 
             </div>
             
@@ -123,15 +123,16 @@
     height: 70px;
     width: 250px;
     background-color: rgb(26, 23, 23);
+    color: white;
     border-radius: 10px;
     border-width: 2px;
     border-style: solid;
-    animation: notif 2s;
+    animation: notif 1s;
     position: absolute;
     bottom: 0;
     right: 0;
     display: block;
-    transition: all 1s ease-out;
+    transition: all .5s ease-out;
 }
 
 @keyframes notif {
