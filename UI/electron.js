@@ -10,15 +10,18 @@ let windowObj = null
 
 function createWindow(){
   windowObj = new BrowserWindow({
-    width: 1030,
-    height: 605,
+    width: 1025,
+    height: 576,
     alwaysOnTop: false,
     maximizable: false,
     minimizable: false,
     center: true,
     autoHideMenuBar: true,
     resizable: false,
-    fullscreenable: false
+    fullscreenable: false,
+    frame: false,
+    titleBarStyle: 'hidden',
+    transparent: true
   });
 
   windowObj.loadURL(url.format(path.join(__dirname, 'index.html')));

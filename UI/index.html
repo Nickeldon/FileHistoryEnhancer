@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./Addons/Multiselector/styles/multiselect.css">
     <link href='./Addons/light-dark-mode.css' rel='stylesheet'>
 </head>
-<body style="background-color: black; width: 1024px; height: 576px; overflow: hidden; border-radius: 10px; border-style: solid; border-width: 3px; border-color: black;">
+<body style="background-color:transparent; width: 1024px; height: 576px; overflow: hidden; border-radius: 10px;">
    
     <div class="main" id="main" style="width: 1024px; height: 576px; position: relative;">
         <div style="position: absolute; width: 100%; height: 100%; border-radius: 10px;">
@@ -21,7 +21,16 @@
         </div>
 
         <div class="filter" id="filter" style="background-color: black; opacity: 5%; width: 100%; height: 100%; position: absolute;"></div>
-            <div style="width: 100%; height: 50px; position: absolute; top: 60px; left: 50px;">
+
+        <div class="top-bar" style="height: 60px; width: 100%; position:absolute; top: 0;">
+            <a style="position:absolute; top: 30px; right: 60px; height: 20px; opacity: 70%;" class="top-btn-app" id="close-app" onclick="setTimeout(() => {window.close()}, 400)">
+                <img src="./Addons/close.png" style="height: 100%;">
+            </a>
+            <a style="position:absolute; top: 30px; right: 100px; height: 20px; opacity: 70%;" class="top-btn-app" id="hide-app" onclick="window.minimize()">
+                <img src="./Addons/minimize.png" style="height: 100%;">
+            </a>
+        </div>
+            <div style="width: 100%; height: 50px; position: absolute; top: 85px; left: 50px;">
                 <h3 style="text-align:left; color: rgb(0, 0, 0); font-weight: 600; -webkit-text-stroke: .7px rgb(255, 255, 255) ">WINDOWS FILE HISTORY<br>
                     <span style="text-align: center;">ENHANCER</span></h3>
                 
@@ -89,6 +98,20 @@
 </body>
 
 <style>
+
+.top-bar{
+    -webkit-app-region: drag;
+    user-select: none;
+}
+
+.top-btn-app:hover{
+cursor: pointer;
+transform: scale(1.1);
+}
+.top-btn-app{
+    -webkit-app-region: no-drag;
+    transition: all .5s ease-out;
+}
 
     * {
         margin: 0;
