@@ -34,14 +34,13 @@ function colormode(pref){
         document.getElementById('sub-select1').style.backgroundColor = 'black'
         document.getElementById('sub-select1').style.borderColor = 'white'
         document.getElementById('sel-txt').style.color = 'white';
-        //console.log(document.querySelector('.multiselect-wrapper').style)
-        //document.querySelector('.multiselect-wrapper').classList.add('invert')
-        //document.querySelector('.multiselect-wrapper').style.backgroundColor = 'black'
         try {
           document.querySelector('.multiselect-wrapper ul').style.backgroundColor = 'black';
         document.querySelector('.multiselect-wrapper ul').style.color = 'white';
         document.querySelector('.multiselect-list').style.color = 'white';
         document.querySelector('.multiselect-list').style.backgroundColor = 'black'; 
+        document.querySelector('.multiselect-input-div input').style.backgroundColor = 'black'
+        document.querySelector('.multiselect-input-div input').style.color = 'white'
         } catch (e) {
           console.log(e)
         }
@@ -49,7 +48,8 @@ function colormode(pref){
         document.getElementById('err-path').style.color = 'white'
         document.getElementById('error').style.color = 'white'
         document.getElementById('success').style.color = 'white';
-        document.getElementById("notification").style.backgroundColor = 'black'
+        document.getElementById("notification").style.backgroundColor = 'black';
+        
     } else if(pref === 'light'){
         localStorage.setItem("colormode", "light")
         document.getElementById('filter').style.opacity = '5%'
@@ -74,6 +74,8 @@ function colormode(pref){
           document.querySelector('.multiselect-wrapper ul').style.color = 'black';
           document.querySelector('.multiselect-list').style.color = 'black';
           document.querySelector('.multiselect-list').style.backgroundColor = 'white'; 
+          document.querySelector('.multiselect-input-div input').style.backgroundColor = '#fff'
+        document.querySelector('.multiselect-input-div input').style.color = 'black';
         } catch (e) {
           console.log(e)
         }
@@ -83,12 +85,14 @@ function colormode(pref){
         document.getElementById('err-path').style.color = 'black'
         document.getElementById('error').style.color = 'black'
         document.getElementById('success').style.color = 'black';
-        document.getElementById("notification").style.backgroundColor = 'white'
+        document.getElementById("notification").style.backgroundColor = 'white';
+        document.querySelector('.security-notification input').style.color = 'black'
+        document.querySelector('.security-notification input').style.backgroundColor = 'white'
+        document.querySelector('.security-notification input').style.borderColor = 'black';
     }
 }
 
 function handler(value){  
-   console.log('entered')
     if(!value){
     document.getElementById('sec-notif').style.visibility = 'visible'
     document.getElementById('sec-notif').style.transform = 'scale(1)'
@@ -107,7 +111,6 @@ function handler(value){
       }
     })
     .then(response => {
-      console.log(response)
     switch(response.status){
       case 220: {
       console.log('path was not valid')
@@ -177,6 +180,13 @@ function Multidirres(){
 
       case 201: {
         success()
+        setTimeout(() => {
+          document.querySelector('body').classList.add('blur')
+          setTimeout(() => {
+            window.location.reload()
+          }, 600)
+        }, 500)
+        
       }break;
     }
   })
@@ -194,7 +204,13 @@ function recursivech(choice){
       }
     }).then((res) => {
       if(res.status === 200){
-        success()
+        success();
+        setTimeout(() => {
+          document.querySelector('body').classList.add('blur')
+          setTimeout(() => {
+            window.location.reload()
+          }, 600)
+        }, 500)
       } else{
         error()
       }

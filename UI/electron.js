@@ -42,6 +42,8 @@ function createWindow(){
   windowObj.on('focus', () => {
     windowObj.setBackgroundColor('#00000000')
   })
+  const [w, h] = windowObj.getSize();
+  windowObj.setSize(w, h);
 }
 
 
