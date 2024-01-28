@@ -85,8 +85,8 @@
                     Do you wish to enable the recursive search for the selected subfolders?
                 </h3>
     
-                <div style="width: 100%; height: 50px; position: relative; margin-top: 70px; display: block ;">
-                    <a onclick="recursivech(true)" id="choice-rec" class="choice-rec"><span>Yes</span></a><br><br><br>
+                <div style="width: 100%; height: 50px; position: relative; margin-top: 70px; display: block;">
+                    <a onclick="recursivech(true)" id="choice-rec" class="choice-rec"><span>Yes</span></a><br><br>
                     <a onclick="recursivech(false)" id="choice-rec" class="choice-rec"><span>No</span></a>
                 </div>
             </div>
@@ -116,6 +116,10 @@
 </body>
 
 <style>
+
+    .choice-rec span{
+        text-align: center;
+    }
 
 .invert { filter: invert(100%); }
 .blur {filter: blur(10px);}
