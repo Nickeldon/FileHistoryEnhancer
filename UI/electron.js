@@ -29,10 +29,10 @@ function createWindow(){
     transparent: true
   });
   windowObj.loadURL(url.format(path.join(__dirname, 'index.html')));
-  //windowObj.webContents.openDevTools()
   windowObj.on('closed', () => {
     windowObj = null
   })
+
 
   //Workaround for frame top-bar glitch (electron 25)
   windowObj.on('blur', () => {

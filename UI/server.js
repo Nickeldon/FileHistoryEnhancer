@@ -13,6 +13,11 @@ app.listen(PORT, () => {
     console.log(`Server listening on Port ${PORT}`);
 });
 
+app.post('/returnrequest', (req, res, next) => {
+    console.log('Request returned')
+    res.sendStatus(200)
+})
+
 app.get('/request', (req, res, next) => {
     try {
         path = JSON.parse(req.query.METADATA).data   

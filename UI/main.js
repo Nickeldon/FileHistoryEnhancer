@@ -11,7 +11,8 @@ module.exports = {
     }catch(e){
         console.error("There is nothing we can do... I messed up",e)
     }
-       var elementarray = []
+       
+        var elementarray = []
        var fileTypes = []
        var validelem = []
     filenames.forEach(element => {

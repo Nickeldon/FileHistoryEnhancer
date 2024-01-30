@@ -1,5 +1,6 @@
 ﻿.multiselect-wrapper {
 	width: 180px;
+	height: 100px;
 	display: inline-block;
 	white-space: nowrap;
 	font-size: 12px;
@@ -13,11 +14,13 @@
 	width: 100%;
 	text-align: center;
 	padding-right: 50px;
+	height: 25px;
 }
 
 .multiselect-wrapper label {
 	display: block;
 	font-size: 12px;
+	height: 20px;
 	font-weight : 600;
 	text-align: center;
 	cursor: pointer;
@@ -64,12 +67,12 @@
 	position: relative;
 	padding: 0px;
 	margin: 0px;
-	max-height: 200px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
 
 	.multiselect-wrapper ul li {
+		padding-top: 10px;
 		padding-right: 20px;
 		display: block;
 		transition: all 1s ease-out;
@@ -89,7 +92,7 @@
 		}
 
 .multiselect-input-div {
-	height: 34px;
+	height: 45px;
 }
 
 	.multiselect-input-div input{

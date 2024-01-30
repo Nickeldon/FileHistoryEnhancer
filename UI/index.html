@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0; Access-Control-Allow-Origin">
     <title>FHE-UI</title>
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
     <style>
         @font-face {
             font-family: Ubuntu;
@@ -12,10 +13,13 @@
     </style>
     <link rel="stylesheet" href="./Addons/Multiselector/styles/multiselect.css">
     <link href='./Addons/light-dark-mode.css' rel='stylesheet'>
+    <script src="./node_modules/dropzone/dist/dropzone-min.js"></script>
+    <link href="./node_modules/dropzone/dist/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body style="background-color:transparent; width: 1024px; height: 576px; overflow: hidden; border-radius: 10px; transition: all .5s ease-out;">
    
-    <div class="main" id="main" style="width: 1024px; height: 576px; position: relative;">
+    <div class="main" id="main" style="width: 1024px; height: 576px; position: relative;" hx-boost="true">
         <div style="position: absolute; width: 100%; height: 100%; border-radius: 10px;">
             <object data="./Addons/bg.html" type="text/html" style="width: 1024px; height: 576px; border-radius: 10px; background-color: transparent;"></object>
         </div>
@@ -39,21 +43,20 @@
                     </div>
             </div>
     
-            <div id="menu1" class="menu1" style="background-color: white; color: black; border-radius: 10px; border-width: 3px; opacity: 70%; border-style: dashed; border-color: gray; height: 300px; width: 80%; position: absolute; display: block; bottom: 10%; left: 10%; align-items: center; justify-content: center;">
-                <h4 style="text-align: center; margin-top: 70px; font-size: larger;">
-                    Choose the folder you want to transform
-                </h4>
-                    <a onclick="document.getElementById('div-select').click(); console.log('yes')" class="btn-select" id="btn-select" style="color: black;">
-                        <span>
-                            No folder selected
-                        </span>
-                </a>
-                <h4 style="text-align: center; margin-top: 100px; margin-right: 15px;" id="path-ph"></h4>
-                <input type="file" id="div-select" class="div-select" oninput="handler()" webkitdirectory style="display: none;">
+            <div id="menu1" class="menu1" webkitdirectory style="background-color: white; color: black; border-radius: 10px; border-width: 3px; opacity: 70%; border-style: dashed; border-color: gray; height: 300px; width: 80%; position: absolute; display: block; bottom: 10%; left: 10%;">
                 
+                <div class="dropzone" id="drop-zone" webkitdirectory style="width:100%; height:100%; border-radius: 10px; border-color:transparent; border-style:solid; background-color:transparent; position:absolute; top:0;">
+                    <h4 style="text-align: center; margin-top: 70px; font-size: larger; transition:all 1s ease-out; color:black;">
+                        Choose the folder you want to transform
+                    </h4>
+                    
+                    <h5 style="text-align: center; margin-top: 70px; font-size: 16px; transition:all 1s ease-out; color: black">
+                        No folder selected
+                    </h5>
+                </div>
+
             </div>
-            
-            <div class="security-notification" id="sec-notif" style="visibility:hidden; display: block; transition: all .3s ease-out; position: absolute; top: 25%; left: 18%; height: 300px; width: 650px; background-color: white; opacity: 80%; border-radius: 10px; border-width: 3px; border-color: rgb(133, 133, 133); border-style: solid; align-items: center; justify-content: center;">
+            <!--<div class="security-notification" id="sec-notif" style="visibility:hidden; display: block; transition: all .3s ease-out; position: absolute; top: 25%; left: 18%; height: 300px; width: 650px; background-color: white; opacity: 80%; border-radius: 10px; border-width: 3px; border-color: rgb(133, 133, 133); border-style: solid; align-items: center; justify-content: center;">
                 <h3 style="font-size: 17px; text-align: center; margin-top: 40px;">
                     Due to security restrictions by Windows, <br>please enter the full directory path below
                 </h3>
@@ -64,7 +67,7 @@
                         </a>
                     </div>
                 
-            </div>
+            </div>-->
 
             <div id="warn-multichoice" class="warn-multichoice" style="background-color: white; color: black; display: none; opacity: 70%; border-radius: 10px; border-width: 3px; border-style: solid; border-color: gray;  position: absolute; width: 80%; height: 300px; bottom: 10%; left: 10%; background-color: rgb(255, 255, 255);">
                 <h3 style="text-align: center; margin-top: 60px;">
@@ -123,6 +126,9 @@
 
 .invert { filter: invert(100%); }
 .blur {filter: blur(10px);}
+.scrl-bar-drk-mode{
+    scrollbar-color: dark;
+}
 
 .notification{
     height: 70px;
@@ -242,7 +248,7 @@ option{
         caret-color: transparent;
     }
 
-    .warn-recursive, .warn-multichoice, .menu1, .filter{
+    .warn-recursive, .warn-multichoice, .dropzone, .filter{
         transition: all .5s ease-out;
     }
     .warn-recursive a{
@@ -301,11 +307,11 @@ option{
 
     }
 </style>
-
 <script src="./Addons/Multiselector/scripts/multiselect.core.js"></script>
 <script src="./Addons/Multiselector/scripts/helper.js"></script>
 <script src="./Addons/Multiselector/scripts/multiselect.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.min.js"></script>
+<script src="Dropzone.js"></script>
 <script src="handler.js"></script>
 </html>
