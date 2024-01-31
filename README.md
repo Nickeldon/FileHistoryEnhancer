@@ -10,10 +10,13 @@
 
 # :notebook_with_decorative_cover: Table of Contents
 
+- [Releases](#releases)
 - [About the Project](#star2-about-the-project)
 - [Roadmap](#compass-roadmap)
 - [License](#warning-license)
 
+## Releases
+<h4> <span> · </span> <a href="https://github.com/Nickeldon/FileHistoryEnhancer/releases/tag/v3.1.1"> Latest release
 
 ## :star2: About the Project
 
