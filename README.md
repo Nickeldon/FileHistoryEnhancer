@@ -10,13 +10,11 @@
 
 # :notebook_with_decorative_cover: Table of Contents
 
+- [Releases](https://github.com/Nickeldon/FileHistoryEnhancer/releases)
 - [About the Project](#star2-about-the-project)
 - [Roadmap](#compass-roadmap)
-- [Contributing](#wave-contributing)
 - [License](#warning-license)
-- [Contact](#handshake-contact)
-
-
+  
 ## :star2: About the Project
 
 ### :camera: Screenshots
@@ -104,6 +102,8 @@ npm start
 * [x] Add a user interface where the user can choose the targetted folder to transform
 * [x] Add directory chain support and user action
 * [x] Add recursion support for indefinite subfolder chains
+* [x] Create modern looking and functional UI
+* [x] Add folder drop feature to enhance usability
 
 
 ## :warning: License
