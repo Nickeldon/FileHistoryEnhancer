@@ -1,7 +1,11 @@
 //document.getElementById('sec-notif').style.transform = 'scale(0)'
+document.getElementById('menu1').classList.add('fade')
+document.getElementById('refresh-btn').classList.add('fade')
+document.getElementById('warn-multichoice').classList.add('fade')
+document.getElementById('warn-recursive').classList.add('fade')
+//document.getElementById('refresh').classList.remove('fade')
 
 try {
-  console.log(localStorage.getItem("colormode"))
   colormode(localStorage.getItem("colormode"))
 } catch (e) {colormode("light")}
 
@@ -27,17 +31,12 @@ function colormode(pref){
         document.getElementById('warn-multichoice').style.color = 'white'
         document.getElementById('warn-recursive').style.color = 'white'
         document.getElementById('warn-multichoice').classList.add('scrl-bar-drk-mode')
-        //document.getElementById('btn-select').style.color = 'white'
+       
         for(i = 0; i < document.getElementsByClassName('choice-rec').length; i++){
             document.getElementsByClassName('choice-rec')[i].style.color = 'white'
-            document.getElementsByClassName('choice-rec')[i].style.backgroundColor = 'black'
         }
         document.getElementsByClassName('gg-dark-mode')[0].style.backgroundColor = 'black'
-        //document.getElementById('sec-notif').style.color = 'white'
-        //document.querySelector('.security-notification input').style.color = 'white'
-        //document.querySelector('.security-notification input').style.backgroundColor = 'black'
-        //document.querySelector('.security-notification input').style.borderColor = 'white';
-        document.getElementById('sub-select1').style.backgroundColor = 'black'
+         document.getElementById('sub-select1').style.backgroundColor = 'black'
         document.getElementById('sub-select1').style.borderColor = 'white'
         document.getElementById('sel-txt').style.color = 'white';
         try {
@@ -96,7 +95,6 @@ function colormode(pref){
         //document.querySelector('.dz-details').style.backgroundColor = 'black'
         for(i = 0; i < document.getElementsByClassName('choice-rec').length; i++){
             document.getElementsByClassName('choice-rec')[i].style.color = 'black'
-            document.getElementsByClassName('choice-rec')[i].style.backgroundColor = 'white'
         }
         document.getElementsByClassName('gg-dark-mode')[0].style.backgroundColor = null
         //document.getElementById('sec-notif').style.color = 'black';
@@ -147,11 +145,6 @@ function handler(value){
     .then(response => {
     switch(response.status){
       case 220: {
-      console.log('path was not valid')
-      //document.getElementsByClassName('btn-select')[0].children[0].innerHTML = 'No Folder selected'
-      //document.getElementById('path-ph').innerHTML = null;
-      //document.getElementById('sec-notif').style.transform = 'scale(0)'
-      //document.getElementById('sec-notif').style.visibility = 'hidden'
         document.getElementById('notification').style.display = 'block';
         document.getElementById('err-path').style.display = 'block';
         document.getElementById('notification').style.opacity = '100%';
@@ -165,19 +158,18 @@ function handler(value){
         }, 2000)
       }break;
       case 205: {
-        console.log('path was valid')
         success()
         setTimeout(() => {
-          document.querySelector('body').classList.add('blur')
+          document.getElementById('main').classList.add('blur')
           setTimeout(() => {
-            window.location.reload()
+            document.getElementById('refresh').style.display = 'block'
+            document.getElementById('refresh').classList.remove('fade')
           }, 600)
         }, 500)
       }break;
       case 201: {
         $.getJSON('http://localhost:8000/request', (data) => {
           const folders = JSON.parse(data.message)
-          console.log(folders)
           folders.forEach((str) => {
             var strchoice = document.createElement('option')
             strchoice.text = str
@@ -185,6 +177,7 @@ function handler(value){
             document.getElementById('Multidirselect').add(strchoice)
           })
           document.multiselect('#Multidirselect');
+          colormode(localStorage.getItem("colormode"))
           document.getElementById('menu1').style.display = 'none'
           document.getElementById('warn-multichoice').style.display = 'block'
         })
@@ -202,19 +195,15 @@ function Multidirres(){
       choices.push(document.querySelector('.Multidirselect').children[i].value)
     }
   } 
-  console.log(choices)
   fetch(`http://localhost:8000/multichoice?METADATA=${JSON.stringify({"data": choices})}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     }
   })
-  .then((res) => {
-    console.log(res)
-    
+  .then((res) => {    
     switch(res.status){
       case 205: {
-        console.log('PATH IS RECURSVE')
         document.getElementById('warn-multichoice').style.display = 'none'
         document.getElementById('warn-recursive').style.display = 'block'
       }break;
@@ -222,9 +211,10 @@ function Multidirres(){
       case 201: {
         success()
         setTimeout(() => {
-          document.querySelector('body').classList.add('blur')
+          document.getElementById('main').classList.add('blur')
           setTimeout(() => {
-            window.location.reload()
+            document.getElementById('refresh').style.display = 'block'
+            document.getElementById('refresh').classList.remove('fade')
           }, 600)
         }, 500)
         
@@ -247,9 +237,10 @@ function recursivech(choice){
       if(res.status === 200){
         success();
         setTimeout(() => {
-          document.querySelector('body').classList.add('blur')
+          document.getElementById('main').classList.add('blur')
           setTimeout(() => {
-            window.location.reload()
+            document.getElementById('refresh').style.display = 'block'
+            document.getElementById('refresh').classList.remove('fade')
           }, 600)
         }, 500)
       } else{

@@ -19,12 +19,12 @@
 </head>
 <body style="background-color:transparent; width: 1024px; height: 576px; overflow: hidden; border-radius: 10px; transition: all .5s ease-out;">
    
-    <div class="main" id="main" style="width: 1024px; height: 576px; position: relative;" hx-boost="true">
+    <div class="main" id="main" style="width: 1024px; height: 576px; position: relative; border-width: 1px; border-radius:10px; border-color:transparent; border-style:solid; transition: all .5s ease-out;" hx-boost="true">
         <div style="position: absolute; width: 100%; height: 100%; border-radius: 10px;">
             <object data="./Addons/bg.html" type="text/html" style="width: 1024px; height: 576px; border-radius: 10px; background-color: transparent;"></object>
         </div>
 
-        <div class="filter" id="filter" style="background-color: black; opacity: 5%; width: 100%; height: 100%; position: absolute; border-radius: 10px;"></div>
+        <div class="filter" id="filter" style="background-color: black; opacity: 5%; width: 100.2%; height: 100%; position: absolute; border-radius: 10px;"></div>
 
         <div class="top-bar" id="top-bar" style="height: 60px; width: 100%; position:absolute; top: 0; background-color: transparent; transition: all 1s ease-out;">
             <a style="position:absolute; top: 30px; right: 60px; height: 20px; opacity: 70%;" class="top-btn-app" id="close-app" onclick="document.querySelector('body').style.opacity = '0%' ;setTimeout(() => {window.close()}, 700)">
@@ -45,14 +45,17 @@
     
             <div id="menu1" class="menu1" webkitdirectory style="background-color: white; color: black; border-radius: 10px; border-width: 3px; opacity: 70%; border-style: dashed; border-color: gray; height: 300px; width: 80%; position: absolute; display: block; bottom: 10%; left: 10%;">
                 
-                <div class="dropzone" id="drop-zone" webkitdirectory style="width:100%; height:100%; border-radius: 10px; border-color:transparent; border-style:solid; background-color:transparent; position:absolute; top:0;">
-                    <h4 style="text-align: center; margin-top: 70px; font-size: larger; transition:all 1s ease-out; color:black;">
-                        Choose the folder you want to transform
-                    </h4>
+                <div class="dropzone" id="drop-zone" webkitdirectory style="width:100%; overflow:hidden ;height:100%; border-radius: 10px; border-color:transparent; border-style:solid; background-color:transparent; position:absolute; top:0;">
+                    <div id="droptxt" style="position: absolute; right: 30%">
+                        <h4 style="text-align: center; margin-top: 70px; font-size: larger; transition:all 1s ease-out; color:black;">
+                            Choose the folder you want to transform
+                        </h4>
+                        
+                        <h5 style="text-align: center; margin-top: 70px; font-size: 16px; transition:all 1s ease-out; color: black">
+                            No folder selected
+                        </h5>
+                    </div>
                     
-                    <h5 style="text-align: center; margin-top: 70px; font-size: 16px; transition:all 1s ease-out; color: black">
-                        No folder selected
-                    </h5>
                 </div>
 
             </div>
@@ -83,17 +86,19 @@
                  </div> 
             </div>  
     
-            <div class="warn-recursive" id="warn-recursive" style="background-color: white; color: black; display: none; opacity: 70%; border-radius: 10px; border-width: 3px; border-style: solid; border-color: gray;  position: absolute; width: 80%; height: 300px; bottom: 10%; left: 10%; background-color: rgb(255, 255, 255);">
+            <div class="warn-recursive" id="warn-recursive" style="color: black; display: none; opacity: 70%; border-radius: 10px; border-width: 3px; border-style: solid; border-color: gray;  position: absolute; width: 80%; height: 300px; bottom: 10%; left: 10%; background-color: rgb(255, 255, 255);">
                 <h3 style="text-align: center; margin-top: 60px;">
                     Do you wish to enable the recursive search for the selected subfolders?
                 </h3>
     
                 <div style="width: 100%; height: 50px; position: relative; margin-top: 70px; display: block;">
-                    <a onclick="recursivech(true)" id="choice-rec" class="choice-rec"><span>Yes</span></a><br><br>
-                    <a onclick="recursivech(false)" id="choice-rec" class="choice-rec"><span>No</span></a>
+                    <a onclick="recursivech(true)" id="choice-rec" class="choice-rec" style="position: absolute; top:0; left:32%"><span>Yes</span></a>
+                    <a onclick="recursivech(false)" id="choice-rec" class="choice-rec" style="position: absolute; top:0; left:62%;"><span>No</span></a>
                 </div>
             </div>
 
+            
+            
             <div class="notification" id="notification" style="display: none;">
                 
                 <span id="success" style="position: absolute; top: 25px; left: 100px; display:none;">
@@ -113,15 +118,91 @@
             </div>
         
     </div>
-        
-        
+
+    <div class="refresh" id="refresh" style="display: none; position: absolute; background-color: transparent; width: 100%; height: 100%; transition: all 1s ease-out;">
+        <h4 style="text-align:center; font-size: 20px; margin-top: 170px; margin-left: 0; letter-spacing: 1px;">
+             Press to refresh
+         </h4>
+     <i style="position: absolute; top: 250px; left: 45%;"><img class="refresh-btn" id="refresh-btn" onclick="window.location.reload()" style="height: 100px;" src="./Addons/refresh.png"></i> 
+ </div>
 
 </body>
 
 <style>
 
-    .choice-rec span{
-        text-align: center;
+    html,
+    body {
+      margin: 0 auto;
+      height: 100%;
+    }
+    
+    body {
+      display: flex;
+      align-items: center;
+      font-family: monospace;
+      justify-content: center;
+      background-color: #1d212b;
+    }
+    
+    
+    .fade:after {
+      position: absolute;
+      content: "";
+      top: 300px;
+      z-index: -1;
+      height: 10%;
+      width: 100%;
+      margin: 0 auto;
+      transform: scale(0.75);
+      -webkit-filter: blur(5vw);
+      filter: blur(5vw);
+      background: linear-gradient(270deg, #ff0f0f, #ffa70f);
+      background-size: 200% 200%;
+      animation: animateGlow 10s ease infinite;
+    }
+    @keyframes animateGlow {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    
+
+.refresh-btn{
+    animation-fill-mode: forwards;
+    transition: all 1s ease-out;
+    animation: spin 4s infinite;
+    transform-origin:center center;
+}
+
+.refresh-btn:hover{
+    transform: scale(1.1);  
+    cursor: pointer;
+
+}
+
+@keyframes spin {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+    .choice-rec{
+        background-color: transparent;
+        width: fit-content;
+        height: fit-content;
+        span{
+            font-weight: 600;
+            text-align: center;
+        }
     }
 
 .invert { filter: invert(100%); }
@@ -171,6 +252,7 @@ transform: scale(1.1);
 }
 
     * {
+        user-select: none; 
         margin: 0;
         padding: 0;
         border: 0;
@@ -253,9 +335,7 @@ option{
     }
     .warn-recursive a{
         text-align: center;
-        width: 100%;   
         height: 40px;
-        background-color: white;
         color: black;
         position: absolute;
         transition: all 1s ease-out;
@@ -268,12 +348,14 @@ option{
     .warn-recursive a span{
         position: absolute;
         top: 25%;
+        transition: all .7s ease-out;
     }
     .warn-recursive a:hover{
         cursor: pointer;
-        background-color: rgb(165, 165, 165);
-        padding-bottom: 10px;
         letter-spacing: 5px;
+        
+        span{
+            color: #ff0f0f;}
     }
     body{
         font-family:Ubuntu, sans-serif;
