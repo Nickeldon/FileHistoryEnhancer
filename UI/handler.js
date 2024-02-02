@@ -5,6 +5,7 @@ document.getElementById('warn-multichoice').classList.add('fade')
 document.getElementById('warn-recursive').classList.add('fade')
 //document.getElementById('refresh').classList.remove('fade')
 
+
 try {
   colormode(localStorage.getItem("colormode"))
 } catch (e) {colormode("light")}
@@ -117,22 +118,14 @@ function colormode(pref){
         document.getElementById('error').style.color = 'black'
         document.getElementById('success').style.color = 'black';
         document.getElementById("notification").style.backgroundColor = 'white';
-        //document.querySelector('.security-notification input').style.color = 'black'
-        //document.querySelector('.security-notification input').style.backgroundColor = 'white'
-        //document.querySelector('.security-notification input').style.borderColor = 'black';
     }
 }
 
 function handler(value){  
     if(!value){
     document.getElementById('sec-notif').style.visibility = 'visible'
-    //document.getElementById('sec-notif').style.transform = 'scale(1)'
-    //document.getElementsByClassName('btn-select')[0].children[0].innerHTML = 'Folder selected'
   } 
     else{
-        //var path = document.getElementById('full-path').value
-        //document.getElementById('path-ph').innerHTML = path
-        //document.getElementById('sec-notif').style.transform = 'scale(0)'
 
         var metadata = {"data": value}
 

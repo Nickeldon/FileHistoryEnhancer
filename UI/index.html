@@ -30,7 +30,7 @@
             <a style="position:absolute; top: 30px; right: 60px; height: 20px; opacity: 70%;" class="top-btn-app" id="close-app" onclick="document.querySelector('body').style.opacity = '0%' ;setTimeout(() => {window.close()}, 700)">
                 <img src="./Addons/close.png" style="height: 100%; transition: all 1s ease-out;">
             </a>
-            <a style="position:absolute; top: 30px; right: 100px; height: 20px; opacity: 70%;" class="top-btn-app" id="hide-app" onclick="window.minimize()">
+            <a style="position:absolute; top: 30px; right: 100px; height: 20px; opacity: 70%;" class="top-btn-app" id="hide-app" onclick="document.querySelector('body').style.transition = 'all .3s ease-out'; document.querySelector('body').style.opacity = '0%'; setTimeout(() => {document.querySelector('body').style.opacity = '100%'; document.querySelector('body').style.transition = 'all .5s ease-out'; window.ipcRender.send('window:minimize');}, 400)">
                 <img src="./Addons/minimize.png" style="height: 100%; transition: all 1s ease-out;">
             </a>
         </div>

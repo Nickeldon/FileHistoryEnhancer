@@ -1,7 +1,9 @@
 const electron = require('electron');
-const {app, BrowserWindow} = electron
+const {app, BrowserWindow, contextBridge} = electron
 const url = require('url')
 const path = require('path');
+const electronIpcMain = require('electron').ipcMain;
+
 try {
   require("./server")  
 } catch (e) {
@@ -9,7 +11,7 @@ try {
 }
 
 
-//require('electron-reload')(__dirname,{electron: path.join(__dirname, 'node_modules', '.bin', 'electron')})
+require('electron-reload')(__dirname,{electron: path.join(__dirname, 'node_modules', '.bin', 'electron')})
 
 let windowObj = null
 
@@ -26,9 +28,16 @@ function createWindow(){
     fullscreenable: false,
     frame: false,
     titleBarStyle: 'hidden',
-    transparent: true
+    transparent: true,
+    webPreferences: {
+      nodeIntegration: false, // is default value after Electron v5
+      contextIsolation: true, // protect against prototype pollution
+      enableRemoteModule: false,
+      preload: path.join(__dirname, 'renderer.js')
+    }
   });
-  windowObj.loadURL(url.format(path.join(__dirname, 'index.html')));
+  windowObj.loadURL(url.format(path.join(__dirname, 'index.html')));  
+  //windowObj.webContents.openDevTools()
   windowObj.on('closed', () => {
     windowObj = null
   })
@@ -52,3 +61,11 @@ app.on('window-all-closed', () => {
 })
 
 app.on('ready', createWindow);
+
+electronIpcMain.on('window:minimize', () => {
+  windowObj.minimize();
+})
+
+electronIpcMain.on('window:restore', () => {
+  windowObj.restore();
+})
