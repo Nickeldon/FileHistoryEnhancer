@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Nickeldon/FileHistoryEnhancer#readme",
   "dependencies": {
+    "@electron/remote": "^2.1.2",
     "cors": "^2.8.5",
     "dropzone": "^6.0.0-beta.2",
     "express": "^4.18.2"
