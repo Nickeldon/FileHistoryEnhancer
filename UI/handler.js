@@ -20,6 +20,7 @@ function colormode(pref){
         localStorage.setItem("colormode", "dark")
         document.getElementById('filter').style.opacity = '70%'
         document.getElementById('menu1').style.backgroundColor = 'black'
+        document.getElementById('refresh-btn').classList.add('invert')
         //document.getElementById('sec-notif').style.backgroundColor = 'black'
         document.getElementById('warn-multichoice').style.backgroundColor = 'black'
         document.getElementById('warn-recursive').style.backgroundColor = 'black'
@@ -54,6 +55,8 @@ function colormode(pref){
         document.getElementById('err-path').style.color = 'white'
         document.getElementById('error').style.color = 'white'
         document.getElementById('success').style.color = 'white';
+        document.getElementById('empt-path').style.color = 'white'
+        document.getElementById('inform-err').classList.add('invert')
         document.getElementById("notification").style.backgroundColor = 'black';
 
         document.querySelector('.dropzone').style.backgroundColor  = 'black';
@@ -70,6 +73,7 @@ function colormode(pref){
         localStorage.setItem("colormode", "light")
         document.getElementById('filter').style.opacity = '5%'
         document.getElementById('menu1').style.backgroundColor = 'white'
+        document.getElementById('refresh-btn').classList.remove('invert')
         //document.getElementById('sec-notif').style.backgroundColor = 'white'
         document.getElementById('warn-multichoice').style.backgroundColor = 'white'
         document.getElementById('warn-recursive').style.backgroundColor = 'white'
@@ -116,17 +120,17 @@ function colormode(pref){
         document.getElementById('sel-txt').style.color = 'black';
         document.getElementById('err-path').style.color = 'black'
         document.getElementById('error').style.color = 'black'
+        document.getElementById('empt-path').style.color = 'black'
+        document.getElementById('inform-err').classList.remove('invert')
+        document.getElementById('icn-err').classList.remove('invert')
         document.getElementById('success').style.color = 'black';
         document.getElementById("notification").style.backgroundColor = 'white';
     }
 }
 
 function handler(value){  
-    if(!value){
-    document.getElementById('sec-notif').style.visibility = 'visible'
-  } 
-    else{
 
+  console.log(value)
         var metadata = {"data": value}
 
         fetch(`http://localhost:8000/request?METADATA=${JSON.stringify(metadata)}`, {
@@ -137,6 +141,37 @@ function handler(value){
     })
     .then(response => {
     switch(response.status){
+      case 230:{
+        reloaderJS('./node_modules/dropzone/dist/dropzone-min.js')
+        //reloaderCSS('./node_modules/dropzone/dist/min/dropzone.min.css')
+        document.getElementById('notification').style.width = '350px'
+        document.getElementById('notification').style.display = 'block'
+        document.getElementById('empt-path').style.display = 'block'
+        document.getElementById('notification').style.opacity = '100%';
+        colormode(localStorage.getItem("colormode"))
+        setTimeout(() => {
+        document.getElementById('notification').style.opacity = '0%';
+        setTimeout(() => {
+          document.getElementById('droptxt').style.display = 'block'
+          document.getElementById('empt-path').style.display = 'none';
+          document.getElementById('notification').style.display = 'none';
+          if(document.getElementById('menu1').style.backgroundColor === 'white') {
+            console.log('passed')
+            document.querySelector('.droptxt h4').style.color = 'white'
+          document.querySelector('.droptxt h5').style.color = 'white';
+          }
+          else {
+            console.log('or is it?')
+            document.querySelector('.droptxt h4').style.color = 'black'
+          document.querySelector('.droptxt h5').style.color = 'black';}
+          setTimeout(() => {
+            window.location.reload()
+          }, 1000)
+          document.getElementById('notification').style.width = '250px'
+        }, 500)
+        }, 2000)
+      }break;
+
       case 220: {
         document.getElementById('notification').style.display = 'block';
         document.getElementById('err-path').style.display = 'block';
@@ -178,7 +213,7 @@ function handler(value){
     }
   })
     .catch(error => {console.error('Error:', error); error()});
-    }
+    
 }
 
 function Multidirres(){
