@@ -28,6 +28,7 @@ app.get('/request', (req, res, next) => {
     console.log('Received data:', path);
 
     if(path){
+    if(isTransformable(path)){
     if(VerifyPath(path)){
         var data = MultidirVerif(path)
         if(data[0]){
@@ -42,7 +43,10 @@ app.get('/request', (req, res, next) => {
         }
     }else{
         res.sendStatus(220)
-    }}
+    }} else{
+        res.sendStatus(230)
+    }
+}
 });
 
 app.get('/multichoice', (req, res, next) => {
@@ -101,6 +105,16 @@ function isrecursive(path, dirnames){
         })
     })
     return multidirbool
+}
+
+function isTransformable(path){
+    try {
+        if(!fs.readdirSync(path).length > 0) return false
+        else return true
+    } catch (e) {
+        console.log(e)
+        return false
+    }
 }
 
 function MultidirVerif(path){

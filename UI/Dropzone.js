@@ -7,21 +7,19 @@ const myDropzone = new Dropzone("#drop-zone", {
     init: function() {
         this.hiddenFileInput.setAttribute("webkitdirectory", true);
     },
-});
+    autoProcessQueue: false
+})
 
 myDropzone.on("addedfiles", (dir) => {
-    if(count > 1) return null
-    path = dir[0].path
-    document.querySelector('.dropzone h4').style.color = 'transparent'
-    document.querySelector('.dropzone h5').style.color = 'transparent'
-    setTimeout(() => {
-        document.getElementById('droptxt').style.display = 'none'
-    }, 1000)
-});
-
-myDropzone.on("complete", () => {
     count++
     if(count === 1){
-    handler(path)
-}
-})
+    document.querySelector('.droptxt h4').style.color = 'transparent'
+    document.querySelector('.droptxt h5').style.color = 'transparent'
+        console.log('passed')
+        path = dir[0].path
+        handler(path)
+        myDropzone.removeAllFiles(true)
+        return null
+    }
+    if(count > 1) return null
+});

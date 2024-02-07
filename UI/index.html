@@ -46,7 +46,7 @@
             <div id="menu1" class="menu1" webkitdirectory style="background-color: white; color: black; border-radius: 10px; border-width: 3px; opacity: 70%; border-style: dashed; border-color: gray; height: 300px; width: 80%; position: absolute; display: block; bottom: 10%; left: 10%;">
                 
                 <div class="dropzone" id="drop-zone" webkitdirectory style="width:100%; overflow:hidden ;height:100%; border-radius: 10px; border-color:transparent; border-style:solid; background-color:transparent; position:absolute; top:0;">
-                    <div id="droptxt" style="position: absolute; right: 30%; background-color:transparent; pointer-events: none; ">
+                    <div id="droptxt" class="droptxt" style="position: absolute; right: 30%; background-color:transparent; pointer-events: none; ">
                         <h4 style="text-align: center; margin-top: 70px; font-size: larger; transition:all 1s ease-out; color:black;">
                             Choose the folder you want to transform
                             <h5 style="text-align: center; margin-top: 70px; font-size: 16px; transition:all 1s ease-out; color: black">
@@ -56,21 +56,8 @@
                     </div>
                     
                 </div>
-
             </div>
-            <!--<div class="security-notification" id="sec-notif" style="visibility:hidden; display: block; transition: all .3s ease-out; position: absolute; top: 25%; left: 18%; height: 300px; width: 650px; background-color: white; opacity: 80%; border-radius: 10px; border-width: 3px; border-color: rgb(133, 133, 133); border-style: solid; align-items: center; justify-content: center;">
-                <h3 style="font-size: 17px; text-align: center; margin-top: 40px;">
-                    Due to security restrictions by Windows, <br>please enter the full directory path below
-                </h3>
-                <input type="text" id="full-path" placeholder="C:\users\user\Documents\FileHistory" style="transition: all 1s ease-out; width: 80%; position: absolute; left: 11%; top: 50%; height: 8.3%; border-radius: 10px; border-style: dashed; border-color: black; align-items: center; text-align: center; justify-content: center; ">
-                    <div style="position: absolute; top: 60%; left: 43%;">
-                        <a class="btn-trapezoid-outline" onclick="handler(true)">
-                            <span style="position: absolute; margin-top: 3px; left: 35px;">Done</span>
-                        </a>
-                    </div>
-                
-            </div>-->
-
+          
             <div id="warn-multichoice" class="warn-multichoice" style="background-color: white; color: black; display: none; opacity: 70%; border-radius: 10px; border-width: 3px; border-style: solid; border-color: gray;  position: absolute; width: 80%; height: 300px; bottom: 10%; left: 10%; background-color: rgb(255, 255, 255);">
                 <h3 style="text-align: center; margin-top: 60px;">
                     There seems to be multiple subfolders inside the selected folder <br> Choose select the folders you wish to transform
@@ -114,7 +101,13 @@
                     <img src="./Addons/error.png" style="height: 30px; position:absolute; top: -5px; left: -40px;" id="icn-err">
                     Unvalid directory
                 </span>
+
+                <span id="empt-path" style="position: absolute; top: 25px; left: 80px; display:none;" >
+                    <img src="./Addons/information.png" style="height: 30px; position:absolute; top: -5px; left: -40px;" id="inform-err">
+                    The directory cannot be empty
+                </span>
             </div>
+
         
     </div>
 
@@ -388,11 +381,25 @@ option{
 
     }
 </style>
+<script>
+    function reloaderJS(src) {
+        $('script[src="' + src + '"]').remove();
+        $('<script>').attr('src', src).appendTo('head');
+    }
+    function reloaderCSS(href) {
+        $('link[href="' + href + '"]').remove();
+        $('<link>')
+        .attr('href', href)
+        .attr('rel', 'stylesheet')
+    .attr('type', 'text/css')
+        .appendTo('head');
+    }
+</script>
 <script src="./Addons/Multiselector/scripts/multiselect.core.js"></script>
 <script src="./Addons/Multiselector/scripts/helper.js"></script>
 <script src="./Addons/Multiselector/scripts/multiselect.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.min.js"></script>
+<script src="./Addons/JQuery 3.1.1/jquery-3.1.1.min.js"></script>
+<script src="./Addons/Soundhandler/howler.min.js"></script>
 <script src="Dropzone.js"></script>
 <script src="handler.js"></script>
 </html>
