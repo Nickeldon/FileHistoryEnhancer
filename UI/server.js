@@ -6,7 +6,7 @@ const app = express();
 var path
 var multidirs
 var ans
-const transform = require('./main').Transformator
+const transform = require('./transformator').ReadFile
 
 app.use(cors())
 app.listen(PORT, () => {
