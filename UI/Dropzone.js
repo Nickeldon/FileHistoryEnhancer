@@ -11,12 +11,14 @@ const myDropzone = new Dropzone("#drop-zone", {
 })
 
 myDropzone.on("addedfiles", (dir) => {
+    console.log(dir)
     count++
     if(count === 1){
     document.querySelector('.droptxt h4').style.color = 'transparent'
     document.querySelector('.droptxt h5').style.color = 'transparent'
         console.log('passed')
         path = dir[0].path
+        console.log(path)
         handler(path)
         myDropzone.removeAllFiles(true)
         return null

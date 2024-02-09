@@ -165,7 +165,7 @@ function handler(value){
             document.querySelector('.droptxt h4').style.color = 'black'
           document.querySelector('.droptxt h5').style.color = 'black';}
           setTimeout(() => {
-            window.location.reload()
+          window.location.reload()
           }, 1000)
           document.getElementById('notification').style.width = '250px'
         }, 500)

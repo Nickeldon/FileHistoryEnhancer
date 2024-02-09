@@ -9,9 +9,13 @@ var ans
 const transform = require('./transformator').ReadFile
 
 app.use(cors())
+
 app.listen(PORT, () => {
     console.log(`Server listening on Port ${PORT}`);
-});
+}).on('error', () => {
+    console.log('port already used')
+    process.exit(1)
+});   
 
 app.post('/returnrequest', (req, res, next) => {
     console.log('Request returned')
