@@ -33,6 +33,7 @@ app.get('/request', (req, res, next) => {
 
     if(path){
     if(isTransformable(path)){
+
     if(VerifyPath(path)){
         var data = MultidirVerif(path)
         if(data[0]){
@@ -48,6 +49,7 @@ app.get('/request', (req, res, next) => {
     }else{
         res.sendStatus(220)
     }} else{
+        console.log('\n\n\nPath is not transformable\n\n\n')
         res.sendStatus(230)
     }
 }
@@ -116,8 +118,19 @@ function isTransformable(path){
         if(!fs.readdirSync(path).length > 0) return false
         else return true
     } catch (e) {
+        if(e.message === `ENOTDIR: not a directory, scandir \'${path}\'`) {
+            //console.log(getParentdir(path))
+            //return isTransformable(getParentdir(path))
+            return false
+        }
+    }
+}
+
+function getParentdir(path){
+    try {
+        return path.split('\\').slice(0, -1).join('\\')
+    } catch (e) {
         console.log(e)
-        return false
     }
 }
 

@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron electron.js",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --prune=true --out=FileHistoryEnhancerUI-V1.6.0",
-    "package-win": "electron-packager . --overwrite --platform=win32 --icon=Addons/icon.ico --arch=ia32 --prune=true --out=FileHistoryEnhancerUI-V4.0.0",
+    "package-win": "electron-packager . --overwrite --platform=win32 --icon=Addons/icon-v2.ico --arch=ia32 --prune=true --out=FileHistoryEnhancerUI-V4.0.0",
     "package-linux": "electron-packager . --overwrite --platform=linux --icon=Addons/icon.png --arch=x64 --prune=true --out=FileHistoryEnhancerUI-V1.6.0"
   },
   "repository": {

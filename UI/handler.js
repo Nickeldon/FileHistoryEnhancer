@@ -5,12 +5,10 @@ document.getElementById('warn-multichoice').classList.add('fade')
 document.getElementById('warn-recursive').classList.add('fade')
 //document.getElementById('refresh').classList.remove('fade')
 
-
-try {
-  colormode(localStorage.getItem("colormode"))
-} catch (e) {colormode("light")}
+colormode(localStorage.getItem("colormode") || 'light') 
 
 function colorbridge(){
+  console.log('entered')
   if(document.getElementById('menu1').style.backgroundColor === 'white') colormode("dark")
   else colormode("light")
 }
@@ -18,6 +16,16 @@ function colorbridge(){
 function colormode(pref){
     if(pref === 'dark'){
         localStorage.setItem("colormode", "dark")
+        document.getElementById('back_warn_anim-parent').style.backgroundColor = '#2c2c2c'
+        document.getElementById('warn_mes_child').style.backgroundColor = '#2c2c2c'
+        document.getElementById('warn_mes_content').style.color = 'white'
+        document.querySelector('#btn_approval button').style.color = 'whitesmoke'
+        document.querySelector('#btn_approval button').style.borderColor = 'whitesmoke'
+
+        Object.entries(document.getElementsByClassName('warn_bumps')).forEach((bump) => {
+          bump[1].style.backgroundColor = '#2c2c2c'
+        })
+        
         document.getElementById('filter').style.opacity = '70%'
         document.getElementById('menu1').style.backgroundColor = 'black'
         document.getElementById('refresh-btn').classList.add('invert')
@@ -71,6 +79,16 @@ function colormode(pref){
         
     } else if(pref === 'light'){
         localStorage.setItem("colormode", "light")
+        document.getElementById('back_warn_anim-parent').style.backgroundColor = 'white'
+        document.getElementById('warn_mes_child').style.backgroundColor = 'white'
+        document.getElementById('warn_mes_content').style.color = 'black'
+        document.querySelector('#btn_approval button').style.color = 'black'
+        document.querySelector('#btn_approval button').style.borderColor = 'black'
+
+        Object.entries(document.getElementsByClassName('warn_bumps')).forEach((bump) => {
+          bump[1].style.backgroundColor = 'white'
+        })
+
         document.getElementById('filter').style.opacity = '5%'
         document.getElementById('menu1').style.backgroundColor = 'white'
         document.getElementById('refresh-btn').classList.remove('invert')
@@ -128,7 +146,7 @@ function colormode(pref){
     }
 }
 
-function handler(value){  
+function handler(value){
 
   console.log(value)
         var metadata = {"data": value}
@@ -165,7 +183,7 @@ function handler(value){
             document.querySelector('.droptxt h4').style.color = 'black'
           document.querySelector('.droptxt h5').style.color = 'black';}
           setTimeout(() => {
-          window.location.reload()
+            window.location.reload()
           }, 1000)
           document.getElementById('notification').style.width = '250px'
         }, 500)
@@ -181,7 +199,7 @@ function handler(value){
         setTimeout(() => {
           document.getElementById('err-path').style.display = 'none';
           document.getElementById('notification').style.display = 'none';
-          window.location.reload()
+            window.location.reload()
         }, 500)
         }, 2000)
       }break;

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1.0; Access-Control-Allow-Origin">
+    <meta name="viewport" content="initial-scale=1.0, Access-Control-Allow-Origin">
     <title>FHE-UI</title>
     <script src="https://unpkg.com/htmx.org@1.9.2"></script>
     <style>
@@ -20,7 +20,7 @@
 <body style="background-color:transparent; width: 1024px; height: 576px; overflow: hidden; border-radius: 10px; transition: all .5s ease-out;">
    
     <div class="main" id="main" style="width: 1024px; height: 576px; position: relative; border-width: 1px; border-radius:10px; border-color:transparent; border-style:solid; transition: all .5s ease-out;" hx-boost="true">
-        <div style="position: absolute; width: 100%; height: 100%; border-radius: 10px;">
+        <div id="bg_object" style="position: absolute; width: 100%; height: 100%; border-radius: 10px;">
             <object data="./Addons/bg.html" type="text/html" style="width: 1024px; height: 576px; border-radius: 10px; background-color: transparent;"></object>
         </div>
 
@@ -38,7 +38,7 @@
                 <h3 style="text-align:left; color: rgb(0, 0, 0); font-weight: 600; -webkit-text-stroke: .7px rgb(255, 255, 255) ">WINDOWS FILE HISTORY<br>
                     <span style="text-align: center;">ENHANCER</span></h3>
                 
-                    <div style="position: absolute; right: 110px; top: 13px; border-radius: 50%;">
+                    <div id="dark-mode-parent" style="position: absolute; right: 110px; top: 13px; border-radius: 50%;">
                         <i class="gg-dark-mode" onclick="colorbridge()"></i>
                     </div>
             </div>
@@ -111,6 +111,38 @@
         
     </div>
 
+    <div id="warn_mes" style="display: block; position:absolute; width:100%; height:600px; bottom:-200px; right:-200px; transition:all 1s ease-out; opacity:0%; display:none">
+        <div id="back_warn_anim-parent" style="background-color:transparent; top:0; right:0; position: absolute; width:600px; height:600px; border-radius:50%" class="warn_div">
+            <div id="transition_warn_anim_child">
+                <div id="back_warn_anim" style="position: relative; z-index:99; width:600px; height:600px; border-radius:50%; background-color:#2c2c2c" class="warn_div">
+                
+                </div>
+            </div>
+        </div>
+        <div id="warn_mes_child" style="top:0; right:0; position: absolute; width:600px; height:600px; border-radius:50%; background-color:#2c2c2c" class="warn_div">
+            <div id="warn_mes_content" style="width: 300px; height:200px; position:absolute; top:100px; left:90px;">
+                
+                <h1 style="color: #ffa70f; font-size:30px; text-align:right">
+                    Please note
+                </h1>
+
+                <h4 style="font-size: 17px; text-align:right">
+                    FileHistoryEnhancer uses an Algorithm that directly modifies the files' metadata.
+                    The program is <span>not made to target files directly</span>. Only folders should be inputted.
+                    The Algorithm will <span>directly traget the parent folder</span> of the inputted files in the situation where <span>the user inputs files instead of folders</span> 
+                </h4>
+
+                <div id="btn_approval" style="width:100px; height:30px; position:absolute; left:10px; bottom:-50px;">
+                    <button onclick="
+                        userApprovalInit()
+                    ">
+                        I understand
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="refresh" id="refresh" style="display: none; position: absolute; background-color: transparent; width: 100%; height: 100%; transition: all 1s ease-out;">
         <h4 style="text-align:center; font-size: 20px; margin-top: 170px; margin-left: 0; letter-spacing: 1px;">
              Press to refresh
@@ -121,6 +153,77 @@
 </body>
 
 <style>
+
+    #btn_approval{
+        button{
+        color:whitesmoke; 
+        border-color:white;
+        width: 150px; 
+        transition: all 1s ease-out;
+        height:40px; 
+        border-radius:15px; 
+        background-color:transparent; 
+        border-width:1px; 
+        border-style:dashed; 
+        font-family:Ubuntu, sans-serif; 
+        font-weight:600;}
+
+        button:hover{
+            cursor: pointer;
+            transform: scale(0.95);
+            opacity: 70%;
+            filter:blur(1px)
+        }
+    }
+
+    #warn_mes_content span{
+        color:rgb(255, 57, 57)
+    }
+
+    .warn_mes{
+        box-shadow: 0px 0px 10px 10px #000000;
+    }
+
+    #back_warn_anim-parent{
+        transition: all 1s ease-out;
+        animation: warn_anim 5s alternate infinite;
+
+        #transition_warn_anim_child{
+            transition: all 1s ease-out;
+            animation: warn_anim_rotate 100s linear infinite;
+
+            #back_warn_anim{
+                transition: all 1s ease-out;
+            }
+        }
+    }
+
+    @keyframes warn_anim_bumps_rot {
+        0%{
+            opacity: 0%;
+        }
+        100%{
+            opacity: 70%;
+        }
+    }
+
+    @keyframes warn_anim_rotate {
+        0%{
+            transform: rotate(0deg);
+        }
+        100%{
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes warn_anim {
+        0%{
+            transform: scale(1);
+        }
+        100%{
+            transform: scale(0.85);
+        }
+    }
 
     html,
     body {
@@ -382,6 +485,53 @@ option{
     }
 </style>
 <script>
+
+    window.onload = () => {
+        let warnstate = localStorage.getItem('user_warned') || 'false'
+        warnstate == 'true' ? warnstate = true : warnstate = false
+      
+        if(!warnstate){
+          document.getElementById('warn_mes').style.display = 'block'
+          
+          setTimeout(() => {
+            document.querySelector('body').style.pointerEvents = 'none'
+            document.getElementById('warn_mes').style.opacity = '75%'
+            document.getElementById('warn_mes').style.pointerEvents = 'all'
+            document.getElementById('top-bar').style.pointerEvents = 'all'
+            document.getElementById('dark-mode-parent').style.pointerEvents = 'all'
+            document.getElementById('menu1').style.filter = 'blur(2px)'
+            document.getElementById('bg_object').style.filter = 'blur(1px)'
+          }, 100)
+
+          
+        let warnMes_child = document.getElementById('back_warn_anim');
+
+        let bumpSize = 80;
+        let bumpSeparation = -30;
+
+        let rad = warnMes_child.offsetWidth / 2;
+        let ci = 2 * Math.PI * rad;
+        let bumps = Math.floor(ci / (bumpSize + bumpSeparation));
+
+        for (let i = 0; i < bumps; i++) {
+            let angle = (i / bumps) * 2 * Math.PI;
+            let x = rad + rad * Math.cos(angle) - bumpSize / 2;
+            let y = rad + rad * Math.sin(angle) - bumpSize / 2;
+
+            var bump = document.createElement('div');
+            bump.style.position = 'absolute';
+            bump.style.width = bumpSize + 'px';
+            bump.style.height = bumpSize + 'px';
+            bump.style.borderRadius = '50%';
+            bump.style.backgroundColor = localStorage.getItem('colormode') == 'dark' ? '#2c2c2c' : 'white';
+            bump.style.left = x + 'px';
+            bump.style.top = y + 'px';
+            bump.className = 'warn_bumps';
+            warnMes_child.appendChild(bump);
+        }
+        }
+      }
+      
     function reloaderJS(src) {
         $('script[src="' + src + '"]').remove();
         $('<script>').attr('src', src).appendTo('head');
@@ -394,6 +544,20 @@ option{
     .attr('type', 'text/css')
         .appendTo('head');
     }
+
+function userApprovalInit(){
+    localStorage.setItem('user_warned', true)
+    document.querySelector('body').style.pointerEvents = 'all'
+    document.getElementById('warn_mes').style.opacity = '0%'
+    document.getElementById('warn_mes').style.pointerEvents = 'none'
+    document.getElementById('menu1').style.filter = 'blur(0px)'
+    document.getElementById('bg_object').style.filter = 'blur(0px)'
+
+    setTimeout(() => {
+        document.getElementById('warn_mes').style.display = 'none'
+    }, 1000)
+}
+
 </script>
 <script src="./Addons/Multiselector/scripts/multiselect.core.js"></script>
 <script src="./Addons/Multiselector/scripts/helper.js"></script>
