@@ -120,8 +120,8 @@ function isTransformable(path){
     } catch (e) {
         if(e.message === `ENOTDIR: not a directory, scandir \'${path}\'`) {
             //console.log(getParentdir(path))
-            //return isTransformable(getParentdir(path))
-            return false
+            return isTransformable(getParentdir(path))
+            //return false
         }
     }
 }
