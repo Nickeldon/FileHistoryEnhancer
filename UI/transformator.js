@@ -110,6 +110,7 @@ module.exports = {
     
                     //You already should have an idea of what is happening there
                     if(value !== elementarray[countedmodifer] + fileTypes[countedmodifer] && fileTypes[countedmodifer]){
+                    console.log('accept ', value)
                     fs.renameSync(dir + '\\' + value, dir + '\\' + elementarray[countedmodifer] + (fileTypes[countedmodifer].split(".")[1] !== 'undefined' && fileTypes ? fileTypes[countedmodifer] : ""))
                 }
             }

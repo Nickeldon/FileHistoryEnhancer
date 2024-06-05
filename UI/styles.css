@@ -1,0 +1,339 @@
+@font-face {
+    font-family: Ubuntu;
+    src: url("./Addons/Ubuntu-Light.ttf");
+}
+
+#btn_approval {
+    button {
+      color: whitesmoke;
+      border-color: white;
+      width: 150px;
+      transition: all 1s ease-out;
+      height: 40px;
+      border-radius: 15px;
+      background-color: transparent;
+      border-width: 1px;
+      border-style: dashed;
+      font-family: Ubuntu, sans-serif;
+      font-weight: 600;
+    }
+
+    button:hover {
+      cursor: pointer;
+      transform: scale(0.95);
+      opacity: 70%;
+      filter: blur(1px);
+    }
+  }
+
+  #warn_mes_content span {
+    color: rgb(255, 57, 57);
+  }
+
+  .warn_mes {
+    box-shadow: 0px 0px 10px 10px #000000;
+  }
+
+  #back_warn_anim-parent {
+    transition: all 1s ease-out;
+    animation: warn_anim 5s alternate infinite;
+
+    #transition_warn_anim_child {
+      transition: all 1s ease-out;
+      animation: warn_anim_rotate 100s linear infinite;
+
+      #back_warn_anim {
+        transition: all 1s ease-out;
+      }
+    }
+  }
+
+  @keyframes warn_anim_bumps_rot {
+    0% {
+      opacity: 0%;
+    }
+    100% {
+      opacity: 70%;
+    }
+  }
+
+  @keyframes warn_anim_rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes warn_anim {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0.85);
+    }
+  }
+
+  html,
+  body {
+    margin: 0 auto;
+    height: 100%;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    font-family: monospace;
+    justify-content: center;
+    background-color: #1d212b;
+  }
+
+  .fade:after {
+    position: absolute;
+    content: "";
+    top: 300px;
+    z-index: -1;
+    height: 10%;
+    width: 100%;
+    margin: 0 auto;
+    transform: scale(0.75);
+    -webkit-filter: blur(5vw);
+    filter: blur(5vw);
+    background: linear-gradient(270deg, #ff0f0f, #ffa70f);
+    background-size: 200% 200%;
+    animation: animateGlow 10s ease infinite;
+  }
+  @keyframes animateGlow {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .refresh-btn {
+    animation-fill-mode: forwards;
+    transition: all 1s ease-out;
+    animation: spin 4s infinite;
+    transform-origin: center center;
+  }
+
+  .refresh-btn:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .choice-rec {
+    background-color: transparent;
+    width: fit-content;
+    height: fit-content;
+    span {
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+
+  .invert {
+    filter: invert(100%);
+  }
+  .blur {
+    filter: blur(10px);
+  }
+  .scrl-bar-drk-mode {
+    scrollbar-color: dark;
+  }
+
+  .notification {
+    height: 70px;
+    width: 250px;
+    background-color: rgb(26, 23, 23);
+    color: white;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    animation: notif 1s;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: block;
+    border-color: transparent;
+    transition: all 0.5s ease-out;
+  }
+
+  @keyframes notif {
+    from {
+      right: -250px;
+    }
+    to {
+      right: 0px;
+    }
+  }
+
+  .top-bar {
+    -webkit-app-region: drag;
+    user-select: none;
+  }
+
+  .top-btn-app:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+  .top-btn-app {
+    -webkit-app-region: no-drag;
+    transition: all 0.5s ease-out;
+  }
+
+  * {
+    user-select: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+  }
+
+  .cont-btn a {
+    transition: all 1s ease-out;
+    text-decoration: none;
+    color: black;
+  }
+
+  .cont-btn a:hover {
+    margin-left: -10px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    color: rgb(59, 37, 37);
+  }
+
+  .multiselect-wrapper {
+    width: 90%;
+    margin-top: 20px;
+    margin-left: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .multiselect-wrapper option {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  option {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .btn-wrap {
+    position: absolute;
+    top: 87%;
+    left: 41%;
+  }
+
+  .btn-trapezoid-outline {
+    width: 100px;
+    height: 25px;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 50px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    display: block;
+    border-width: 1px;
+    border-style: dashed;
+    transition: all 0.5s ease-out;
+    border-color: black;
+  }
+
+  .btn-trapezoid-outline:hover {
+    background: #6e6f72;
+    cursor: pointer;
+    color: white;
+  }
+
+  .security-notification input:focus {
+    outline-width: 0;
+    outline: none;
+    border-color: rgb(120, 70, 28);
+    caret-color: transparent;
+  }
+
+  .warn-recursive,
+  .warn-multichoice,
+  .dropzone,
+  .filter {
+    transition: all 0.5s ease-out;
+  }
+  .warn-recursive a {
+    text-align: center;
+    height: 40px;
+    color: black;
+    position: absolute;
+    transition: all 1s ease-out;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    letter-spacing: 2px;
+  }
+  .warn-recursive a span {
+    position: absolute;
+    top: 25%;
+    transition: all 0.7s ease-out;
+  }
+  .warn-recursive a:hover {
+    cursor: pointer;
+    letter-spacing: 5px;
+
+    span {
+      color: #ff0f0f;
+    }
+  }
+  body {
+    font-family: Ubuntu, sans-serif;
+  }
+  .btn-select {
+    text-decoration: none;
+    color: black;
+    width: 150px;
+    height: 40px;
+    position: absolute;
+    top: 45%;
+    left: 40%;
+    border-radius: 5px;
+    border-width: 3px;
+    border-style: double;
+    border-color: gray;
+    transition: all 1s ease-out;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-select span {
+    position: absolute;
+    top: 30%;
+    left: 20%;
+    font-size: 11px;
+  }
+  .btn-select:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    border-color: rgb(120, 70, 28);
+  }

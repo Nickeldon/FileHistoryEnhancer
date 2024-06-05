@@ -1,510 +1,551 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1.0, Access-Control-Allow-Origin">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1.0"
+    />
     <title>FHE-UI</title>
-    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
-    <style>
-        @font-face {
-            font-family: Ubuntu;
-            src: url('./Addons/Ubuntu-Light.ttf');
-        }
-    </style>
-    <link rel="stylesheet" href="./Addons/Multiselector/styles/multiselect.css">
-    <link href='./Addons/light-dark-mode.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./styles.css"/>
+    <link rel="stylesheet" href="./Addons/Multiselector/styles/multiselect.css"/>
+    <link href="./Addons/light-dark-mode.css" rel="stylesheet"/>
+    <link href="./Addons/Dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css"/>
+
     <script src="./Addons/Dropzone/min/dropzone-min.js"></script>
-    <link href="./Addons/Dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+  </head>
+  <body
+    style="
+      background-color: transparent;
+      width: 1024px;
+      height: 576px;
+      overflow: hidden;
+      border-radius: 10px;
+      transition: all 0.5s ease-out;
+    "
+  >
+    <div
+      class="main"
+      id="main"
+      style="
+        width: 1024px;
+        height: 576px;
+        position: relative;
+        border-width: 1px;
+        border-radius: 10px;
+        border-color: transparent;
+        border-style: solid;
+        transition: all 0.5s ease-out;
+      "
+      hx-boost="true"
+    >
+      <div
+        id="bg_object"
+        style="
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 10px;
+        "
+      >
+        <object
+          data="./Addons/bg.html"
+          type="text/html"
+          style="
+            width: 1024px;
+            height: 576px;
+            border-radius: 10px;
+            background-color: transparent;
+          "
+        ></object>
+      </div>
 
-</head>
-<body style="background-color:transparent; width: 1024px; height: 576px; overflow: hidden; border-radius: 10px; transition: all .5s ease-out;">
-   
-    <div class="main" id="main" style="width: 1024px; height: 576px; position: relative; border-width: 1px; border-radius:10px; border-color:transparent; border-style:solid; transition: all .5s ease-out;" hx-boost="true">
-        <div id="bg_object" style="position: absolute; width: 100%; height: 100%; border-radius: 10px;">
-            <object data="./Addons/bg.html" type="text/html" style="width: 1024px; height: 576px; border-radius: 10px; background-color: transparent;"></object>
-        </div>
+      <div
+        class="filter"
+        id="filter"
+        style="
+          background-color: black;
+          opacity: 5%;
+          width: 100.2%;
+          height: 100%;
+          position: absolute;
+          border-radius: 10px;
+        "
+      ></div>
 
-        <div class="filter" id="filter" style="background-color: black; opacity: 5%; width: 100.2%; height: 100%; position: absolute; border-radius: 10px;"></div>
-
-        <div class="top-bar" id="top-bar" style="height: 60px; width: 100%; position:absolute; top: 0; background-color: transparent; transition: all 1s ease-out;">
-            <a style="position:absolute; top: 30px; right: 60px; height: 20px; opacity: 70%;" class="top-btn-app" id="close-app" onclick="document.querySelector('body').style.opacity = '0%' ;setTimeout(() => {window.close()}, 700)">
-                <img src="./Addons/close.png" style="height: 100%; transition: all 1s ease-out;">
-            </a>
-            <a style="position:absolute; top: 30px; right: 100px; height: 20px; opacity: 70%;" class="top-btn-app" id="hide-app" onclick="document.querySelector('body').style.transition = 'all .3s ease-out'; document.querySelector('body').style.opacity = '0%'; setTimeout(() => {document.querySelector('body').style.opacity = '100%'; document.querySelector('body').style.transition = 'all .5s ease-out'; window.ipcRender.send('window:minimize');}, 400)">
-                <img src="./Addons/minimize.png" style="height: 100%; transition: all 1s ease-out;">
-            </a>
-        </div>
-            <div style="width: 100%; height: 50px; position: absolute; top: 85px; left: 50px;">
-                <h3 style="text-align:left; color: rgb(0, 0, 0); font-weight: 600; -webkit-text-stroke: .7px rgb(255, 255, 255) ">WINDOWS FILE HISTORY<br>
-                    <span style="text-align: center;">ENHANCER</span></h3>
-                
-                    <div id="dark-mode-parent" style="position: absolute; right: 110px; top: 13px; border-radius: 50%;">
-                        <i class="gg-dark-mode" onclick="colorbridge()"></i>
-                    </div>
-            </div>
-    
-            <div id="menu1" class="menu1" webkitdirectory style="background-color: white; color: black; border-radius: 10px; border-width: 3px; opacity: 70%; border-style: dashed; border-color: gray; height: 300px; width: 80%; position: absolute; display: block; bottom: 10%; left: 10%;">
-                
-                <div class="dropzone" id="drop-zone" webkitdirectory style="width:100%; overflow:hidden ;height:100%; border-radius: 10px; border-color:transparent; border-style:solid; background-color:transparent; position:absolute; top:0;">
-                    <div id="droptxt" class="droptxt" style="position: absolute; right: 30%; background-color:transparent; pointer-events: none; ">
-                        <h4 style="text-align: center; margin-top: 70px; font-size: larger; transition:all 1s ease-out; color:black;">
-                            Choose the folder you want to transform
-                            <h5 style="text-align: center; margin-top: 70px; font-size: 16px; transition:all 1s ease-out; color: black">
-                                No folder selected
-                            </h5>
-                        </h4>
-                    </div>
-                    
-                </div>
-            </div>
-          
-            <div id="warn-multichoice" class="warn-multichoice" style="background-color: white; color: black; display: none; opacity: 70%; border-radius: 10px; border-width: 3px; border-style: solid; border-color: gray;  position: absolute; width: 80%; height: 300px; bottom: 10%; left: 10%; background-color: rgb(255, 255, 255);">
-                <h3 style="text-align: center; margin-top: 60px;">
-                    There seems to be multiple subfolders inside the selected folder <br> Choose select the folders you wish to transform
-                </h3>
-                <div class="sub-select1" id="sub-select1" style="width: 90%; height: 150px; border-radius: 10px; border-color: black; border-style: solid; border-width: 3px; position: absolute; background-color: rgb(231, 231, 231); left: 5%; overflow-y:scroll;">
-                    <select id="Multidirselect" class="Multidirselect" multiple autofocus>
-                        <option value="">Current</option>
-                    </select>
-                <div style="position: relative; width: 100%; height: 20px;" class="cont-btn">
-                    <a style="text-align: center; text-decoration: none; position: absolute; left: 43%;" onclick="Multidirres()" id="sel-txt">- CONTINUE -</a>
-                </div>
-                 </div> 
-            </div>  
-    
-            <div class="warn-recursive" id="warn-recursive" style="color: black; display: none; opacity: 70%; border-radius: 10px; border-width: 3px; border-style: solid; border-color: gray;  position: absolute; width: 80%; height: 300px; bottom: 10%; left: 10%; background-color: rgb(255, 255, 255);">
-                <h3 style="text-align: center; margin-top: 60px;">
-                    Do you wish to enable the recursive search for the selected subfolders?
-                </h3>
-    
-                <div style="width: 100%; height: 50px; position: relative; margin-top: 70px; display: block;">
-                    <a onclick="recursivech(true)" id="choice-rec" class="choice-rec" style="position: absolute; top:0; left:32%"><span>Yes</span></a>
-                    <a onclick="recursivech(false)" id="choice-rec" class="choice-rec" style="position: absolute; top:0; left:62%;"><span>No</span></a>
-                </div>
-            </div>
-
-            
-            
-            <div class="notification" id="notification" style="display: none;">
-                
-                <span id="success" style="position: absolute; top: 25px; left: 100px; display:none;">
-                    <img src="./Addons/success.png" style="height: 40px; position:absolute; top: -13px; left: -50px" id="icn-cor">
-                    success
-                </span>
-                
-                <span id="error" style="position: absolute; top: 25px; left: 60px; display:none;" >
-                    <img src="./Addons/error.png" style="height: 30px; position:absolute; top: -5px; left: -35px;" id="icn-err">
-                    Something went wrong
-                </span>
-
-                <span id="err-path" style="position: absolute; top: 25px; left: 80px; display:none;" >
-                    <img src="./Addons/error.png" style="height: 30px; position:absolute; top: -5px; left: -40px;" id="icn-err">
-                    Unvalid directory
-                </span>
-
-                <span id="empt-path" style="position: absolute; top: 25px; left: 80px; display:none;" >
-                    <img src="./Addons/information.png" style="height: 30px; position:absolute; top: -5px; left: -40px;" id="inform-err">
-                    The directory cannot be empty
-                </span>
-            </div>
-
-        
-    </div>
-
-    <div id="warn_mes" style="display: block; position:absolute; width:100%; height:600px; bottom:-200px; right:-200px; transition:all 1s ease-out; opacity:0%; display:none">
-        <div id="back_warn_anim-parent" style="background-color:transparent; top:0; right:0; position: absolute; width:600px; height:600px; border-radius:50%" class="warn_div">
-            <div id="transition_warn_anim_child">
-                <div id="back_warn_anim" style="position: relative; z-index:99; width:600px; height:600px; border-radius:50%; background-color:#2c2c2c" class="warn_div">
-                
-                </div>
-            </div>
-        </div>
-        <div id="warn_mes_child" style="top:0; right:0; position: absolute; width:600px; height:600px; border-radius:50%; background-color:#2c2c2c" class="warn_div">
-            <div id="warn_mes_content" style="width: 300px; height:200px; position:absolute; top:100px; left:90px;">
-                
-                <h1 style="color: #ffa70f; font-size:30px; text-align:right">
-                    Please note
-                </h1>
-
-                <h4 style="font-size: 17px; text-align:right">
-                    FileHistoryEnhancer uses an Algorithm that directly modifies the files' metadata.
-                    The program is <span>not made to target files directly</span>. Only folders should be inputted.
-                    The Algorithm will <span>directly traget the parent folder</span> of the inputted files in the situation where <span>the user inputs files instead of folders</span> 
-                </h4>
-
-                <div id="btn_approval" style="width:100px; height:30px; position:absolute; left:10px; bottom:-50px;">
-                    <button onclick="
-                        userApprovalInit()
-                    ">
-                        I understand
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="refresh" id="refresh" style="display: none; position: absolute; background-color: transparent; width: 100%; height: 100%; transition: all 1s ease-out;">
-        <h4 style="text-align:center; font-size: 20px; margin-top: 170px; margin-left: 0; letter-spacing: 1px;">
-             Press to refresh
-         </h4>
-     <i style="position: absolute; top: 250px; left: 45%;"><img class="refresh-btn" id="refresh-btn" onclick="window.location.reload()" style="height: 100px;" src="./Addons/refresh.png"></i> 
- </div>
-
-</body>
-
-<style>
-
-    #btn_approval{
-        button{
-        color:whitesmoke; 
-        border-color:white;
-        width: 150px; 
-        transition: all 1s ease-out;
-        height:40px; 
-        border-radius:15px; 
-        background-color:transparent; 
-        border-width:1px; 
-        border-style:dashed; 
-        font-family:Ubuntu, sans-serif; 
-        font-weight:600;}
-
-        button:hover{
-            cursor: pointer;
-            transform: scale(0.95);
+      <div
+        class="top-bar"
+        id="top-bar"
+        style="
+          height: 60px;
+          width: 100%;
+          position: absolute;
+          top: 0;
+          background-color: transparent;
+          transition: all 1s ease-out;
+        "
+      >
+        <a
+          style="
+            position: absolute;
+            top: 30px;
+            right: 60px;
+            height: 20px;
             opacity: 70%;
-            filter:blur(1px)
-        }
-    }
-
-    #warn_mes_content span{
-        color:rgb(255, 57, 57)
-    }
-
-    .warn_mes{
-        box-shadow: 0px 0px 10px 10px #000000;
-    }
-
-    #back_warn_anim-parent{
-        transition: all 1s ease-out;
-        animation: warn_anim 5s alternate infinite;
-
-        #transition_warn_anim_child{
-            transition: all 1s ease-out;
-            animation: warn_anim_rotate 100s linear infinite;
-
-            #back_warn_anim{
-                transition: all 1s ease-out;
-            }
-        }
-    }
-
-    @keyframes warn_anim_bumps_rot {
-        0%{
-            opacity: 0%;
-        }
-        100%{
+          "
+          class="top-btn-app"
+          id="close-app"
+          onclick="document.querySelector('body').style.opacity = '0%' ;setTimeout(() => {window.close()}, 700)"
+        >
+          <img
+            src="./Addons/close.png"
+            style="height: 100%; transition: all 1s ease-out"
+          />
+        </a>
+        <a
+          style="
+            position: absolute;
+            top: 30px;
+            right: 100px;
+            height: 20px;
             opacity: 70%;
-        }
-    }
-
-    @keyframes warn_anim_rotate {
-        0%{
-            transform: rotate(0deg);
-        }
-        100%{
-            transform: rotate(360deg);
-        }
-    }
-
-    @keyframes warn_anim {
-        0%{
-            transform: scale(1);
-        }
-        100%{
-            transform: scale(0.85);
-        }
-    }
-
-    html,
-    body {
-      margin: 0 auto;
-      height: 100%;
-    }
-    
-    body {
-      display: flex;
-      align-items: center;
-      font-family: monospace;
-      justify-content: center;
-      background-color: #1d212b;
-    }
-    
-    
-    .fade:after {
-      position: absolute;
-      content: "";
-      top: 300px;
-      z-index: -1;
-      height: 10%;
-      width: 100%;
-      margin: 0 auto;
-      transform: scale(0.75);
-      -webkit-filter: blur(5vw);
-      filter: blur(5vw);
-      background: linear-gradient(270deg, #ff0f0f, #ffa70f);
-      background-size: 200% 200%;
-      animation: animateGlow 10s ease infinite;
-    }
-    @keyframes animateGlow {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-    
-
-.refresh-btn{
-    animation-fill-mode: forwards;
-    transition: all 1s ease-out;
-    animation: spin 4s infinite;
-    transform-origin:center center;
-}
-
-.refresh-btn:hover{
-    transform: scale(1.1);  
-    cursor: pointer;
-
-}
-
-@keyframes spin {
-    from{
-        transform: rotate(0deg);
-    }
-    to{
-        transform: rotate(360deg);
-    }
-}
-
-    .choice-rec{
-        background-color: transparent;
-        width: fit-content;
-        height: fit-content;
-        span{
+          "
+          class="top-btn-app"
+          id="hide-app"
+          onclick="document.querySelector('body').style.transition = 'all .3s ease-out'; document.querySelector('body').style.opacity = '0%'; setTimeout(() => {document.querySelector('body').style.opacity = '100%'; document.querySelector('body').style.transition = 'all .5s ease-out'; window.ipcRender.send('window:minimize');}, 400)"
+        >
+          <img
+            src="./Addons/minimize.png"
+            style="height: 100%; transition: all 1s ease-out"
+          />
+        </a>
+      </div>
+      <div
+        style="
+          width: 100%;
+          height: 50px;
+          position: absolute;
+          top: 85px;
+          left: 50px;
+        "
+      >
+        <h3
+          style="
+            text-align: left;
+            color: rgb(0, 0, 0);
             font-weight: 600;
-            text-align: center;
-        }
-    }
+            -webkit-text-stroke: 0.7px rgb(255, 255, 255);
+          "
+        >
+          WINDOWS FILE HISTORY<br />
+          <span style="text-align: center">ENHANCER</span>
+        </h3>
 
-.invert { filter: invert(100%); }
-.blur {filter: blur(10px);}
-.scrl-bar-drk-mode{
-    scrollbar-color: dark;
-}
+        <div
+          id="dark-mode-parent"
+          style="
+            position: absolute;
+            right: 110px;
+            top: 13px;
+            border-radius: 50%;
+          "
+        >
+          <i class="gg-dark-mode" onclick="colorbridge()"></i>
+        </div>
+      </div>
 
-.notification{
-    height: 70px;
-    width: 250px;
-    background-color: rgb(26, 23, 23);
-    color: white;
-    border-radius: 10px;
-    border-width: 2px;
-    border-style: solid;
-    animation: notif 1s;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    display: block;
-    border-color: transparent;
-    transition: all .5s ease-out;
-}
+      <div
+        id="menu1"
+        class="menu1"
+        webkitdirectory
+        style="
+          background-color: white;
+          color: black;
+          border-radius: 10px;
+          border-width: 3px;
+          opacity: 70%;
+          border-style: dashed;
+          border-color: gray;
+          height: 300px;
+          width: 80%;
+          position: absolute;
+          display: block;
+          bottom: 10%;
+          left: 10%;
+        "
+      >
+        <div
+          class="dropzone"
+          id="drop-zone"
+          webkitdirectory
+          style="
+            width: 100%;
+            overflow: hidden;
+            height: 100%;
+            border-radius: 10px;
+            border-color: transparent;
+            border-style: solid;
+            background-color: transparent;
+            position: absolute;
+            top: 0;
+          "
+        >
+          <div
+            id="droptxt"
+            class="droptxt"
+            style="
+              position: absolute;
+              right: 24%;
+              background-color: transparent;
+              pointer-events: none;
+            "
+          >
+            <h4
+              style="
+                text-align: center;
+                margin-top: 70px;
+                font-size: larger;
+                transition: all 1s ease-out;
+                color: black;
+              "
+            >
+              Choose or Drop the folder you want to transform
+              <h5
+                style="
+                  text-align: center;
+                  margin-top: 70px;
+                  font-size: 16px;
+                  transition: all 1s ease-out;
+                  color: black;
+                "
+              >
+                No folder selected
+              </h5>
+            </h4>
+          </div>
+        </div>
+      </div>
 
-@keyframes notif {
-    from{
-        right: -250px;
-    }
-    to{
-        right: 0px;
-    }
-}
+      <div
+        id="warn-multichoice"
+        class="warn-multichoice"
+        style="
+          background-color: white;
+          color: black;
+          display: none;
+          opacity: 70%;
+          border-radius: 10px;
+          border-width: 3px;
+          border-style: solid;
+          border-color: gray;
+          position: absolute;
+          width: 80%;
+          height: 300px;
+          bottom: 10%;
+          left: 10%;
+          background-color: rgb(255, 255, 255);
+        "
+      >
+        <h3 style="text-align: center; margin-top: 60px">
+          There seems to be multiple subfolders inside the selected folder
+          <br />
+          Choose select the folders you wish to transform
+        </h3>
+        <div
+          class="sub-select1"
+          id="sub-select1"
+          style="
+            width: 90%;
+            height: 150px;
+            border-radius: 10px;
+            border-color: black;
+            border-style: solid;
+            border-width: 3px;
+            position: absolute;
+            background-color: rgb(231, 231, 231);
+            left: 5%;
+            overflow-y: scroll;
+          "
+        >
+          <select id="Multidirselect" class="Multidirselect" multiple autofocus>
+            <option value="">Current</option>
+          </select>
+          <div
+            style="position: relative; width: 100%; height: 20px"
+            class="cont-btn"
+          >
+            <a
+              style="
+                text-align: center;
+                text-decoration: none;
+                position: absolute;
+                left: 43%;
+              "
+              onclick="Multidirres()"
+              id="sel-txt"
+              >- CONTINUE -</a
+            >
+          </div>
+        </div>
+      </div>
 
-.top-bar{
-    -webkit-app-region: drag;
-    user-select: none;
-}
+      <div
+        class="warn-recursive"
+        id="warn-recursive"
+        style="
+          color: black;
+          display: none;
+          opacity: 70%;
+          border-radius: 10px;
+          border-width: 3px;
+          border-style: solid;
+          border-color: gray;
+          position: absolute;
+          width: 80%;
+          height: 300px;
+          bottom: 10%;
+          left: 10%;
+          background-color: rgb(255, 255, 255);
+        "
+      >
+        <h3 style="text-align: center; margin-top: 60px">
+          Do you wish to enable the recursive search for the selected
+          subfolders?
+        </h3>
 
-.top-btn-app:hover{
-cursor: pointer;
-transform: scale(1.1);
-}
-.top-btn-app{
-    -webkit-app-region: no-drag;
-    transition: all .5s ease-out;
-}
+        <div
+          style="
+            width: 100%;
+            height: 50px;
+            position: relative;
+            margin-top: 70px;
+            display: block;
+          "
+        >
+          <a
+            onclick="recursivech(true)"
+            id="choice-rec"
+            class="choice-rec"
+            style="position: absolute; top: 0; left: 32%"
+            ><span>Yes</span></a
+          >
+          <a
+            onclick="recursivech(false)"
+            id="choice-rec"
+            class="choice-rec"
+            style="position: absolute; top: 0; left: 62%"
+            ><span>No</span></a
+          >
+        </div>
+      </div>
 
-    * {
-        user-select: none; 
-        margin: 0;
-        padding: 0;
-        border: 0;
-        outline: 0;
-        font-size: 100%;
-        vertical-align: baseline;
-        background: transparent;
-    }
+      <div class="notification" id="notification" style="display: none">
+        <span
+          id="success"
+          style="position: absolute; top: 25px; left: 100px; display: none"
+        >
+          <img
+            src="./Addons/success.png"
+            style="height: 40px; position: absolute; top: -13px; left: -50px"
+            id="icn-cor"
+          />
+          success
+        </span>
 
-.cont-btn a{
-    transition: all 1s ease-out;
-    text-decoration: none;
-    color: black;
-}
+        <span
+          id="error"
+          style="position: absolute; top: 25px; left: 60px; display: none"
+        >
+          <img
+            src="./Addons/error.png"
+            style="height: 30px; position: absolute; top: -5px; left: -35px"
+            id="icn-err"
+          />
+          Something went wrong
+        </span>
 
-.cont-btn a:hover{
-    margin-left: -10px;
-    cursor: pointer;
-    letter-spacing: 2px;
-    color: rgb(59, 37, 37);
-}
+        <span
+          id="err-path"
+          style="position: absolute; top: 25px; left: 80px; display: none"
+        >
+          <img
+            src="./Addons/error.png"
+            style="height: 30px; position: absolute; top: -5px; left: -40px"
+            id="icn-err"
+          />
+          Unvalid directory
+        </span>
 
-.multiselect-wrapper {
- width: 90%;
- margin-top: 20px;
- margin-left: 15px;
- border-radius: 10px;
- overflow: hidden;
- text-align: center;
-}
+        <span
+          id="empt-path"
+          style="position: absolute; top: 25px; left: 80px; display: none"
+        >
+          <img
+            src="./Addons/information.png"
+            style="height: 30px; position: absolute; top: -5px; left: -40px"
+            id="inform-err"
+          />
+          The directory cannot be empty
+        </span>
+      </div>
+    </div>
 
-.multiselect-wrapper option{
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-option{
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.btn-wrap{
-    position: absolute;
-    top: 87%;
-    left: 41%;
-}
-
-.btn-trapezoid-outline{
-    width: 100px;
-    height: 25px;
-    text-align: center;
-    font-size: 14px;
-    border-radius: 50px;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
-    display: block;
-    border-width: 1px;
-    border-style: dashed;
-    transition: all .5s ease-out;
-    border-color: black;
-}
-
-.btn-trapezoid-outline:hover{
-  background: #6e6f72;
-  cursor: pointer;
-  color: white;
-}
-
-    .security-notification input:focus{
-        outline-width: 0;
-        outline: none;
-        border-color: rgb(120, 70, 28);
-        caret-color: transparent;
-    }
-
-    .warn-recursive, .warn-multichoice, .dropzone, .filter{
-        transition: all .5s ease-out;
-    }
-    .warn-recursive a{
-        text-align: center;
-        height: 40px;
-        color: black;
+    <div
+      id="warn_mes"
+      style="
+        display: block;
         position: absolute;
+        width: 100%;
+        height: 600px;
+        bottom: -200px;
+        right: -200px;
         transition: all 1s ease-out;
-        text-decoration: none;
-        justify-content: center;
-        align-items: center;
-        vertical-align: middle;
-        letter-spacing: 2px;
-    }
-    .warn-recursive a span{
+        opacity: 0%;
+        display: none;
+      "
+    >
+      <div
+        id="back_warn_anim-parent"
+        style="
+          background-color: transparent;
+          top: 0;
+          right: 0;
+          position: absolute;
+          width: 600px;
+          height: 600px;
+          border-radius: 50%;
+        "
+        class="warn_div"
+      >
+        <div id="transition_warn_anim_child">
+          <div
+            id="back_warn_anim"
+            style="
+              position: relative;
+              z-index: 99;
+              width: 600px;
+              height: 600px;
+              border-radius: 50%;
+              background-color: #2c2c2c;
+            "
+            class="warn_div"
+          ></div>
+        </div>
+      </div>
+      <div
+        id="warn_mes_child"
+        style="
+          top: 0;
+          right: 0;
+          position: absolute;
+          width: 600px;
+          height: 600px;
+          border-radius: 50%;
+          background-color: #2c2c2c;
+        "
+        class="warn_div"
+      >
+        <div
+          id="warn_mes_content"
+          style="
+            width: 300px;
+            height: 200px;
+            position: absolute;
+            top: 100px;
+            left: 90px;
+          "
+        >
+          <h1 style="color: #ffa70f; font-size: 30px; text-align: right">
+            Please note
+          </h1>
+
+          <h4 style="font-size: 17px; text-align: right">
+            FileHistoryEnhancer uses an Algorithm that directly modifies the
+            files' metadata. The program is
+            <span>not made to target files directly</span>. Only folders should
+            be inputted. The Algorithm will
+            <span>directly traget the parent folder</span> of the inputted files
+            in the situation where
+            <span>the user inputs files instead of folders</span>
+          </h4>
+
+          <div
+            id="btn_approval"
+            style="
+              width: 100px;
+              height: 30px;
+              position: absolute;
+              left: 10px;
+              bottom: -50px;
+            "
+          >
+            <button
+              onclick="
+                        userApprovalInit()
+                    "
+            >
+              I understand
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="refresh"
+      id="refresh"
+      style="
+        display: none;
         position: absolute;
-        top: 25%;
-        transition: all .7s ease-out;
-    }
-    .warn-recursive a:hover{
-        cursor: pointer;
-        letter-spacing: 5px;
-        
-        span{
-            color: #ff0f0f;}
-    }
-    body{
-        font-family:Ubuntu, sans-serif;
-    }
-    .btn-select{
-        text-decoration: none;
-        color: black;
-        width: 150px;
-        height: 40px;
-        position: absolute;
-        top: 45%;
-        left: 40%;
-        border-radius: 5px;
-        border-width: 3px;
-        border-style: double;
-        border-color: gray;
+        background-color: transparent;
+        width: 100%;
+        height: 100%;
         transition: all 1s ease-out;
-        align-items: center;
-        justify-content: center;
-    }
-    .btn-select span{
-        position: absolute;
-        top: 30%;
-        left: 20%;
-        font-size: 11px;
-    }
-    .btn-select:hover{
-        cursor: pointer;
-        transform: scale(1.1);
-        border-color: rgb(120, 70, 28);
-
-    }
-</style>
-<script>
-
+      "
+    >
+      <h4
+        style="
+          text-align: center;
+          font-size: 20px;
+          margin-top: 170px;
+          margin-left: 0;
+          letter-spacing: 1px;
+        "
+      >
+        Press to refresh
+      </h4>
+      <i style="position: absolute; top: 250px; left: 45%"
+        ><img
+          class="refresh-btn"
+          id="refresh-btn"
+          onclick="window.location.reload()"
+          style="height: 100px"
+          src="./Addons/refresh.png"
+      /></i>
+    </div>
+  </body>
+  
+  <script>
     window.onload = () => {
-        let warnstate = localStorage.getItem('user_warned') || 'false'
-        warnstate == 'true' ? warnstate = true : warnstate = false
-      
-        if(!warnstate){
-          document.getElementById('warn_mes').style.display = 'block'
-          
-          setTimeout(() => {
-            document.querySelector('body').style.pointerEvents = 'none'
-            document.getElementById('warn_mes').style.opacity = '75%'
-            document.getElementById('warn_mes').style.pointerEvents = 'all'
-            document.getElementById('top-bar').style.pointerEvents = 'all'
-            document.getElementById('dark-mode-parent').style.pointerEvents = 'all'
-            document.getElementById('menu1').style.filter = 'blur(2px)'
-            document.getElementById('bg_object').style.filter = 'blur(1px)'
-          }, 100)
+      let warnstate = localStorage.getItem("user_warned") || "false";
+      warnstate == "true" ? (warnstate = true) : (warnstate = false);
 
-          
-        let warnMes_child = document.getElementById('back_warn_anim');
+      if (!warnstate) {
+        document.getElementById("warn_mes").style.display = "block";
+
+        setTimeout(() => {
+          document.querySelector("body").style.pointerEvents = "none";
+          document.getElementById("warn_mes").style.opacity = "75%";
+          document.getElementById("warn_mes").style.pointerEvents = "all";
+          document.getElementById("top-bar").style.pointerEvents = "all";
+          document.getElementById("dark-mode-parent").style.pointerEvents =
+            "all";
+          document.getElementById("menu1").style.filter = "blur(2px)";
+          document.getElementById("bg_object").style.filter = "blur(1px)";
+        }, 100);
+
+        let warnMes_child = document.getElementById("back_warn_anim");
 
         let bumpSize = 80;
         let bumpSeparation = -30;
@@ -514,56 +555,57 @@ option{
         let bumps = Math.floor(ci / (bumpSize + bumpSeparation));
 
         for (let i = 0; i < bumps; i++) {
-            let angle = (i / bumps) * 2 * Math.PI;
-            let x = rad + rad * Math.cos(angle) - bumpSize / 2;
-            let y = rad + rad * Math.sin(angle) - bumpSize / 2;
+          let angle = (i / bumps) * 2 * Math.PI;
+          let x = rad + rad * Math.cos(angle) - bumpSize / 2;
+          let y = rad + rad * Math.sin(angle) - bumpSize / 2;
 
-            var bump = document.createElement('div');
-            bump.style.position = 'absolute';
-            bump.style.width = bumpSize + 'px';
-            bump.style.height = bumpSize + 'px';
-            bump.style.borderRadius = '50%';
-            bump.style.backgroundColor = localStorage.getItem('colormode') == 'dark' ? '#2c2c2c' : 'white';
-            bump.style.left = x + 'px';
-            bump.style.top = y + 'px';
-            bump.className = 'warn_bumps';
-            warnMes_child.appendChild(bump);
-        }
+          var bump = document.createElement("div");
+          bump.style.position = "absolute";
+          bump.style.width = bumpSize + "px";
+          bump.style.height = bumpSize + "px";
+          bump.style.borderRadius = "50%";
+          bump.style.backgroundColor =
+            localStorage.getItem("colormode") == "dark" ? "#2c2c2c" : "white";
+          bump.style.left = x + "px";
+          bump.style.top = y + "px";
+          bump.className = "warn_bumps";
+          warnMes_child.appendChild(bump);
         }
       }
-      
+    };
+
     function reloaderJS(src) {
-        $('script[src="' + src + '"]').remove();
-        $('<script>').attr('src', src).appendTo('head');
+      $('script[src="' + src + '"]').remove();
+      $("<script>").attr("src", src).appendTo("head");
     }
     function reloaderCSS(href) {
-        $('link[href="' + href + '"]').remove();
-        $('<link>')
-        .attr('href', href)
-        .attr('rel', 'stylesheet')
-    .attr('type', 'text/css')
-        .appendTo('head');
+      $('link[href="' + href + '"]').remove();
+      $("<link>")
+        .attr("href", href)
+        .attr("rel", "stylesheet")
+        .attr("type", "text/css")
+        .appendTo("head");
     }
 
-function userApprovalInit(){
-    localStorage.setItem('user_warned', true)
-    document.querySelector('body').style.pointerEvents = 'all'
-    document.getElementById('warn_mes').style.opacity = '0%'
-    document.getElementById('warn_mes').style.pointerEvents = 'none'
-    document.getElementById('menu1').style.filter = 'blur(0px)'
-    document.getElementById('bg_object').style.filter = 'blur(0px)'
+    function userApprovalInit() {
+      localStorage.setItem("user_warned", true);
+      document.querySelector("body").style.pointerEvents = "all";
+      document.getElementById("warn_mes").style.opacity = "0%";
+      document.getElementById("warn_mes").style.pointerEvents = "none";
+      document.getElementById("menu1").style.filter = "blur(0px)";
+      document.getElementById("bg_object").style.filter = "blur(0px)";
 
-    setTimeout(() => {
-        document.getElementById('warn_mes').style.display = 'none'
-    }, 1000)
-}
-
-</script>
-<script src="./Addons/Multiselector/scripts/multiselect.core.js"></script>
-<script src="./Addons/Multiselector/scripts/helper.js"></script>
-<script src="./Addons/Multiselector/scripts/multiselect.js"></script>
-<script src="./Addons/JQuery 3.1.1/jquery-3.1.1.min.js"></script>
-<script src="./Addons/Soundhandler/howler.min.js"></script>
-<script src="Dropzone.js"></script>
-<script src="handler.js"></script>
+      setTimeout(() => {
+        document.getElementById("warn_mes").style.display = "none";
+      }, 1000);
+    }
+  </script>
+  <script src="./Addons/Multiselector/scripts/multiselect.core.js"></script>
+  <script src="./Addons/Multiselector/scripts/helper.js"></script>
+  <script src="./Addons/Multiselector/scripts/multiselect.js"></script>
+  <script src="./Addons/JQuery 3.1.1/jquery-3.1.1.min.js"></script>
+  <script src="./Addons/Soundhandler/howler.min.js"></script>
+  <script src="Dropzone.js"></script>
+  <script src="handler.js"></script>
 </html>
+ 
